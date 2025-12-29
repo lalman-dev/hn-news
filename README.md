@@ -60,12 +60,14 @@ It features category navigation, trending stories, search, and animated item det
 
 ## 📂 Project Structure
 
+```
 app/
 ├─ [category]/page.tsx # Dynamic category route
 ├─ item/[id]/page.tsx # Item detail with comments
 ├─ search/[keyword]/page.tsx # Search results
 ├─ components/ # Reusable UI components (Navbar, Spinner, etc.)
 └─ globals.css # Tailwind global styles
+```
 
 ## 📦 Installation
 
