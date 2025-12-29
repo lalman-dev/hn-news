@@ -1,65 +1,140 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import { useEffect, useState } from "react";
+import Spinner from "./components/Spinner";
+import { motion } from "framer-motion";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+
+type Hit = {
+  objectID: string;
+  title: string;
+  url?: string;
+  points?: number;
+  author?: string;
+  num_comments?: number;
+};
+
+export default function HomePage() {
+  const [trending, setTrending] = useState<Hit[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const router = useRouter();
+  const [searchTerm, setSearchTerm] = useState("");
+
+  useEffect(() => {
+    const fetchTrending = async () => {
+      setLoading(true);
+      setError("");
+      try {
+        const res = await fetch(
+          "https://hn.algolia.com/api/v1/search?tags=front_page"
+        );
+        if (!res.ok) throw new Error("Network response was not ok");
+        const data = await res.json();
+        setTrending(data.hits || []);
+      } catch (err) {
+        setError("Failed to load trending stories");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTrending();
+  }, []);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <motion.main
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.6 }}
+      className="mx-auto max-w-3xl px-6 py-10"
+    >
+      {/* Branding */}
+      <motion.h1
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        className="text-3xl font-extrabold bg-linear-to-r from-orange-700 via-orange-300 to-orange-700 bg-clip-text text-transparent text-center"
+      >
+        Hacker News Portal
+      </motion.h1>
+
+      {/* Search */}
+      <motion.div
+        initial={{ y: 30, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 0.3, duration: 0.5 }}
+        className="mt-6 flex gap-5 justify-center"
+      >
+        <motion.input
+          placeholder="Search Hacker News"
+          whileFocus={{ scale: 1.02 }}
+          transition={{ duration: 0.2 }}
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="w-full max-w-xl rounded-xl px-5 py-3 border border-gray-700 bg-gray-900 text-gray-200 
+               focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+        <motion.button
+          whileTap={{ scale: 0.95 }}
+          whileHover={{ scale: 1.05 }}
+          transition={{ duration: 0.2 }}
+          onClick={() => {
+            if (searchTerm.trim()) {
+              router.push(`/search/${encodeURIComponent(searchTerm.trim())}`);
+            }
+          }}
+          className="rounded-xl px-5 py-3 bg-orange-400 text-white font-semibold hover:bg-orange-500 transition"
+        >
+          Search
+        </motion.button>
+      </motion.div>
+
+      {/* Trending */}
+      <h2 className="mt-10 mb-4 text-xl font-semibold text-gray-200">
+        Currently Trending
+      </h2>
+
+      {loading ? (
+        <Spinner />
+      ) : error ? (
+        <p className="text-red-500">{error}</p>
+      ) : (
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 gap-4"
+          initial="hidden"
+          animate="visible"
+          variants={{
+            hidden: {},
+            visible: { transition: { staggerChildren: 0.1 } },
+          }}
+        >
+          {trending.map((hit) => (
+            <motion.article
+              key={hit.objectID}
+              className="rounded-lg border border-gray-700 bg-gray-900 p-4 hover:border-orange-500 transition"
+              whileHover={{ scale: 1.02 }}
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0 },
+              }}
+              transition={{ duration: 0.4 }}
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+              <Link
+                href={`/item/${hit.objectID}`}
+                className="font-bold text-gray-100 hover:text-orange-400 transition"
+              >
+                {hit.title}
+              </Link>
+              <p className="mt-2 text-sm text-gray-400">
+                {hit.points ?? 0} points • {hit.num_comments ?? 0} comments • by{" "}
+                {hit.author}
+              </p>
+            </motion.article>
+          ))}
+        </motion.div>
+      )}
+    </motion.main>
   );
 }
