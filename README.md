@@ -6,6 +6,12 @@ It features category navigation, trending stories, search, and animated item det
 
 ---
 
+## 🌐 Live Demo
+
+[![Live Demo](https://img.shields.io/badge/Live_Demo-Vercel-brightgreen?style=for-the-badge&logo=vercel)](https://hn-news-two.vercel.app/)
+
+---
+
 ## 🛠️ Tech Stack
 
 ![Next.js](https://img.shields.io/badge/Next.js-000000?logo=nextdotjs&logoColor=white)
@@ -27,7 +33,11 @@ It features category navigation, trending stories, search, and animated item det
 
 ---
 
-## 🔗 API Integration This project uses the [Hacker News Algolia API](https://hn.algolia.com/api) to fetch live data: - **Category Pages** → `https://hn.algolia.com/api/v1/search?query={category}&tags=story` - **Search Results** → `https://hn.algolia.com/api/v1/search?query={keyword}&tags=story` - **Item Detail** → `https://hn.algolia.com/api/v1/items/{id}` (includes nested comments) The API integration ensures stories, comments, and search results are always up‑to‑date. ---
+## 🔗 API Integration This project uses the [Hacker News Algolia API](https://hn.algolia.com/api) to fetch live data: - **Category Pages** → `https://hn.algolia.com/api/v1/search?query={category}&tags=story`
+
+- The API integration ensures stories, comments, and search results are always up‑to‑date.
+
+---
 
 ## 🧭 Development Journey
 
@@ -47,6 +57,15 @@ It features category navigation, trending stories, search, and animated item det
 - **Phase 5: Recruiter‑Friendly Polish** Added animations, scroll‑aware shadow, responsive mobile menu, and trending section.
 
 ---
+
+## 📂 Project Structure
+
+app/
+├─ [category]/page.tsx # Dynamic category route
+├─ item/[id]/page.tsx # Item detail with comments
+├─ search/[keyword]/page.tsx # Search results
+├─ components/ # Reusable UI components (Navbar, Spinner, etc.)
+└─ globals.css # Tailwind global styles
 
 ## 📦 Installation
 
@@ -78,3 +97,5 @@ Open http://localhost:3000 to view it in your browser.
 🔄 Infinite scroll or "Load more" button
 
 📈 Analytics (mocked) to track category clicks
+
+## 🤝 Contributing Pull requests are welcome. For major changes, please open an issue first to discuss.
