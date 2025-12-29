@@ -1,36 +1,80 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 Hacker News Portal
 
-## Getting Started
+A polished, user‑friendly Hacker News client built with **Next.js**,**TypeScript**, **TailwindCSS**, and **Framer Motion**.  
+It integrates with the **Hacker News Algolia API** to fetch live stories, categories, search results, and comments.
+It features category navigation, trending stories, search, and animated item detail pages with collapsible comment trees.
 
-First, run the development server:
+---
+
+## 🛠️ Tech Stack
+
+![Next.js](https://img.shields.io/badge/Next.js-000000?logo=nextdotjs&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-38B2AC?logo=tailwindcss&logoColor=white)
+![Framer Motion](https://img.shields.io/badge/Framer_Motion-0055FF?logo=framer&logoColor=white)
+![Hacker News API](https://img.shields.io/badge/HN_API-FF6600?logo=hacker-news&logoColor=white)
+
+---
+
+## ✨ Features
+
+- 🏠 **Home Page** with logo + navbar
+- 📂 **Category Navigation** (Tech, Science, Games, Business, AI, Programming, Startups, Cybersecurity, Design)
+- 🔥 **Trending Section** for popular stories
+- 🔎 **Search** with keyword‑based results powered by Hacker News API queries
+- 📄 **Item Detail Page** with animated entry + collapsible comment trees
+- 📱 **Responsive Navbar** with scroll shadow, hover animations, and mobile menu
+
+---
+
+## 🔗 API Integration This project uses the [Hacker News Algolia API](https://hn.algolia.com/api) to fetch live data: - **Category Pages** → `https://hn.algolia.com/api/v1/search?query={category}&tags=story` - **Search Results** → `https://hn.algolia.com/api/v1/search?query={keyword}&tags=story` - **Item Detail** → `https://hn.algolia.com/api/v1/items/{id}` (includes nested comments) The API integration ensures stories, comments, and search results are always up‑to‑date. ---
+
+## 🧭 Development Journey
+
+- **Phase 1: Static Pages**  
+  Initially, each category (Tech, Science, Games, Business, etc.) had its own static page. This proved the concept but quickly became repetitive.
+
+- **Phase 2: Realization & Refactor**  
+  I realized the need for a smarter solution: a single dynamic `[category]` route. This eliminated duplication and made the app scalable.
+
+- **Phase 3: Elegant Navbar**  
+  Introduced a `newsCategories` array. Each category name maps automatically to a lowercase path (e.g., `"AI"` → `/ai`).  
+  The Navbar `.map()` renders links dynamically, so adding new categories is as simple as updating the array.
+
+- **Phase 4: User‑Friendly Polish**  
+  Added animations, scroll‑aware shadow, responsive mobile menu, and trending section.
+
+- **Phase 5: Recruiter‑Friendly Polish** Added animations, scroll‑aware shadow, responsive mobile menu, and trending section.
+
+---
+
+## 📦 Installation
 
 ```bash
+# Clone the repository
+git clone https://github.com/lalman-dev/hn-news.git
+
+# Navigate into the project
+cd hn-news
+
+# Install dependencies
+npm install
+
+# Run the development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000 to view it in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+🚧 Upcoming Enhancements:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+🎨 Skeleton loaders for smoother UX
 
-## Learn More
+⭐ Bookmark / Favorites system
 
-To learn more about Next.js, take a look at the following resources:
+📊 Search filters (points, comments, date)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+🔄 Infinite scroll or "Load more" button
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+📈 Analytics (mocked) to track category clicks
