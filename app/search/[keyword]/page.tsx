@@ -49,6 +49,12 @@ export default function SearchPage() {
       transition={{ duration: 0.6 }}
       className="mx-auto max-w-3xl px-6 py-10"
     >
+      {/* Background Image */}
+      <img
+        src="https://raw.githubusercontent.com/prebuiltui/prebuiltui/refs/heads/main/assets/hero/bg-gradient-2.png"
+        className="absolute inset-0 -z-10 size-full opacity"
+        alt=""
+      />
       <motion.h1
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}

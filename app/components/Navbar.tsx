@@ -34,7 +34,7 @@ export default function Navbar() {
       initial={{ y: -80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`sticky top-0 left-0 w-full px-6 py-4 border-b border-gray-700 bg-gray-900 flex justify-between items-center z-50 ${
+      className={`sticky top-0 left-0 w-full px-6 py-4 border-b border-gray-700 bg-gray-700/30 backdrop-blur-lg flex justify-between items-center z-50 shadow-lg shadow-slate-400/30 ${
         scrolled ? "shadow-lg" : ""
       }`}
     >
