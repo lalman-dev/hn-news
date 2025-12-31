@@ -20,7 +20,6 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  // Track scroll position
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 10);
@@ -46,11 +45,19 @@ export default function Navbar() {
       </motion.div>
 
       {/* Desktop Links */}
-      <div className="hidden md:flex gap-4 text-sm font-medium text-gray-300">
+      <div className="hidden md:flex gap-6 text-sm font-medium text-gray-300">
         {newsCategories.map((item) => (
-          <motion.div key={item} whileHover={{ scale: 1.1, color: "#f97316" }}>
-            <Link href={`/${item.toLowerCase()}`}>{item}</Link>
-          </motion.div>
+          <div key={item} className="relative overflow-hidden h-6">
+            <div className="transition-transform duration-400 hover:-translate-y-full">
+              <Link href={`/${item.toLowerCase()}`}>{item}</Link>
+              <Link
+                href={`/${item.toLowerCase()}`}
+                className="absolute top-full left-0"
+              >
+                {item}
+              </Link>
+            </div>
+          </div>
         ))}
       </div>
 

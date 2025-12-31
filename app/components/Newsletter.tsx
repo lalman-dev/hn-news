@@ -1,10 +1,14 @@
-import { X } from "lucide-react";
+import { SparkleIcon } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import React, { useState } from "react";
 
 export default function NewsLetter() {
   const [email, setEmail] = useState<string>("");
   const [showModal, setShowModal] = useState<boolean>(false);
+
+  setTimeout(() => {
+    setShowModal(false);
+  }, 3000);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -48,9 +52,13 @@ export default function NewsLetter() {
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="bg-transparent outline-none rounded-full px-4 h-full flex-1"
+          className="bg-transparent outline-none rounded-lg px-4 h-full flex-1"
           placeholder="Enter your email address"
         />
+        <span
+          aria-hidden="true"
+          className="border-r text-gray-400 h-11 mr-1.5"
+        ></span>
         <motion.button
           type="submit"
           className="relative bg-orange-400 bg-clip-text text-transparent 
@@ -62,29 +70,30 @@ export default function NewsLetter() {
           Subscribe now
         </motion.button>
       </motion.form>
-
       {/* Success Modal */}
       <AnimatePresence>
         {showModal && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.9 }}
+            exit={{ opacity: 0, scale: 0.5 }}
+            transition={{ duration: 0.6 }}
             className="fixed inset-0 flex items-center justify-center bg-black/50"
           >
             <div className="bg-white rounded-lg p-6 text-center max-w-sm w-full">
-              <h2 className="text-xl font-semibold mb-2">
-                🎉 Subscription Successful
+              <h2 className="text-xl text-gray-600 font-semibold mb-2">
+                🎉 Subscription Successful 🎉
               </h2>
               <p className="text-gray-600 mb-4">
                 Thanks for Subscribing! You will receive updates soon.
               </p>
-              <button
-                onClick={() => setShowModal(false)}
-                className="bg-red-400  rounded-full p-3 "
+              <motion.button
+                animate={{ rotate: 360 }}
+                transition={{ duration: 1, ease: "easeInOut" }}
+                className="bg-green-400 rounded-full p-3"
               >
-                <X />
-              </button>
+                <SparkleIcon />
+              </motion.button>
             </div>
           </motion.div>
         )}
