@@ -5,6 +5,7 @@ import Spinner from "./components/Spinner";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import NewsLetter from "./components/Newsletter";
 
 type Hit = {
   objectID: string;
@@ -50,6 +51,12 @@ export default function HomePage() {
       transition={{ duration: 0.6 }}
       className="mx-auto max-w-3xl px-6 py-10"
     >
+      {/* Background Image */}
+      <img
+        src="https://raw.githubusercontent.com/prebuiltui/prebuiltui/refs/heads/main/assets/hero/bg-gradient-2.png"
+        className="absolute inset-0 -z-10 size-full opacity"
+        alt=""
+      />
       {/* Branding */}
       <motion.h1
         initial={{ y: -20, opacity: 0 }}
@@ -90,7 +97,8 @@ export default function HomePage() {
           Search
         </motion.button>
       </motion.div>
-
+      {/* Newsletter */}
+      <NewsLetter />
       {/* Trending */}
       <h2 className="mt-10 mb-4 text-xl font-semibold text-gray-200">
         Currently Trending
