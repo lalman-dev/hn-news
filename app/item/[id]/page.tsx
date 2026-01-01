@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import Spinner from "../../components/Spinner";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import { fetchHN } from "@/app/lib/hnApi";
 
 type Comment = {
   id: number;
@@ -24,21 +25,24 @@ type Item = {
 };
 
 export default function ItemPage() {
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const [item, setItem] = useState<Item | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   useEffect(() => {
+    if (!id) return;
+
     const fetchItem = async () => {
       setLoading(true);
       setError("");
+
       try {
-        const res = await fetch(`https://hn.algolia.com/api/v1/items/${id}`);
-        if (!res.ok) throw new Error("Network response was not ok");
-        const data = await res.json();
+        const data = await fetchHN<Item>(
+          `https://hn.algolia.com/api/v1/items/${id}`
+        );
         setItem(data);
-      } catch (err) {
+      } catch {
         setError("Failed to load item");
       } finally {
         setLoading(false);

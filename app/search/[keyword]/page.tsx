@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import Spinner from "../../components/Spinner";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { fetchHN } from "@/app/lib/hnApi";
 
 type Hit = {
   objectID: string;
@@ -15,24 +16,30 @@ type Hit = {
   num_comments?: number;
 };
 
+type HNResponse<T> = {
+  hits: T[];
+};
+
 export default function SearchPage() {
-  const { keyword } = useParams();
+  const { keyword } = useParams<{ keyword: string }>();
   const [results, setResults] = useState<Hit[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   useEffect(() => {
+    if (!keyword) return;
+
     const fetchSearchResults = async () => {
       setLoading(true);
       setError("");
+
       try {
-        const res = await fetch(
+        const data = await fetchHN<HNResponse<Hit>>(
           `https://hn.algolia.com/api/v1/search?query=${keyword}&tags=story`
         );
-        if (!res.ok) throw new Error("Network response was not ok");
-        const data = await res.json();
+
         setResults(data.hits || []);
-      } catch (err) {
+      } catch {
         setError("Failed to load search results");
       } finally {
         setLoading(false);
@@ -49,12 +56,6 @@ export default function SearchPage() {
       transition={{ duration: 0.6 }}
       className="mx-auto max-w-3xl px-6 py-10"
     >
-      {/* Background Image */}
-      <img
-        src="https://raw.githubusercontent.com/prebuiltui/prebuiltui/refs/heads/main/assets/hero/bg-gradient-2.png"
-        className="absolute inset-0 -z-10 size-full opacity"
-        alt=""
-      />
       <motion.h1
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -71,25 +72,12 @@ export default function SearchPage() {
       ) : results.length === 0 ? (
         <p className="text-gray-400">No results found.</p>
       ) : (
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 gap-4"
-          initial="hidden"
-          animate="visible"
-          variants={{
-            hidden: {},
-            visible: { transition: { staggerChildren: 0.1 } },
-          }}
-        >
+        <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {results.map((hit) => (
             <motion.article
               key={hit.objectID}
               className="rounded-lg border border-gray-700 bg-gray-900 p-4 hover:border-orange-500 transition"
               whileHover={{ scale: 1.02 }}
-              variants={{
-                hidden: { opacity: 0, y: 20 },
-                visible: { opacity: 1, y: 0 },
-              }}
-              transition={{ duration: 0.4 }}
             >
               <Link
                 href={`/item/${hit.objectID}`}

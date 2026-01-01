@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import Spinner from "../components/Spinner";
 import { motion } from "motion/react";
 import Link from "next/link";
+import { fetchHN } from "../lib/hnApi";
 
 type Hit = {
   objectID: string;
@@ -14,6 +15,9 @@ type Hit = {
   author?: string;
   num_comments?: number;
 };
+type HNResponse<T> = {
+  hits: T[];
+};
 
 export default function CategoryPage() {
   const { category } = useParams();
@@ -22,17 +26,17 @@ export default function CategoryPage() {
   const [error, setError] = useState("");
 
   useEffect(() => {
+    if (!category) return;
+
     const fetchCategoryNews = async () => {
       setLoading(true);
       setError("");
       try {
-        const res = await fetch(
+        const data = await fetchHN<HNResponse<Hit>>(
           `https://hn.algolia.com/api/v1/search?query=${category}&tags=story`
         );
-        if (!res.ok) throw new Error("Network response was not ok");
-        const data = await res.json();
         setResults(data.hits || []);
-      } catch (err) {
+      } catch {
         setError(`Failed to load ${category} news`);
       } finally {
         setLoading(false);

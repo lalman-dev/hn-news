@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import NewsLetter from "./components/Newsletter";
+import { fetchHN } from "./lib/hnApi";
 
 type Hit = {
   objectID: string;
@@ -14,6 +15,9 @@ type Hit = {
   points?: number;
   author?: string;
   num_comments?: number;
+};
+type HNResponse<T> = {
+  hits: T[];
 };
 
 export default function HomePage() {
@@ -27,14 +31,13 @@ export default function HomePage() {
     const fetchTrending = async () => {
       setLoading(true);
       setError("");
+
       try {
-        const res = await fetch(
+        const data = await fetchHN<HNResponse<Hit>>(
           "https://hn.algolia.com/api/v1/search?tags=front_page"
         );
-        if (!res.ok) throw new Error("Network response was not ok");
-        const data = await res.json();
         setTrending(data.hits || []);
-      } catch (err) {
+      } catch {
         setError("Failed to load trending stories");
       } finally {
         setLoading(false);
