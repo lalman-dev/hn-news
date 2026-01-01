@@ -1,12 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Spinner from "./components/Spinner";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import NewsLetter from "./components/Newsletter";
 import { fetchHN } from "./lib/hnApi";
+import SkeletonCard from "./components/SkeletonCard";
 
 type Hit = {
   objectID: string;
@@ -108,7 +108,11 @@ export default function HomePage() {
       </h2>
 
       {loading ? (
-        <Spinner />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <SkeletonCard key={i} />
+          ))}
+        </div>
       ) : error ? (
         <p className="text-red-500">{error}</p>
       ) : (
