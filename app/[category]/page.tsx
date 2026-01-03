@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import Spinner from "../components/Spinner";
 import { motion } from "motion/react";
 import Link from "next/link";
 import { fetchHN } from "../lib/hnApi";
@@ -49,6 +48,7 @@ export default function CategoryPage() {
 
   return (
     <motion.main
+      id="main-content"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
@@ -61,6 +61,7 @@ export default function CategoryPage() {
         alt=""
       />
       <motion.h1
+      aria-label={`News category: ${category}`}
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
@@ -70,15 +71,19 @@ export default function CategoryPage() {
       </motion.h1>
 
       {loading ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div
+        role="status"
+        aria-live="polite"
+        aria-label={`Loading ${category} news`}
+        className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {Array.from({ length: 6 }).map((_, i) => (
             <SkeletonCard key={i} />
           ))}
         </div>
       ) : error ? (
-        <p className="text-red-500">{error}</p>
+        <p role="alert" className="text-red-500">{error}</p>
       ) : results.length === 0 ? (
-        <p className="text-gray-400">No results found.</p>
+        <p role="status" className="text-gray-400">No results found for this category.</p>
       ) : (
         <motion.div
           className="grid grid-cols-1 md:grid-cols-2 gap-4"
@@ -102,7 +107,7 @@ export default function CategoryPage() {
             >
               <Link
                 href={`/item/${hit.objectID}`}
-                className="font-bold text-gray-100 hover:text-orange-400 transition"
+                className="font-bold text-gray-100 hover:text-orange-400 transition focus:outline-none focus:ring focus:ring-orange-400 rounded"
               >
                 {hit.title}
               </Link>
