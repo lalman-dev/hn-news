@@ -6,6 +6,7 @@ import Spinner from "../../components/Spinner";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { fetchHN } from "@/app/lib/hnApi";
+import SkeletonCard from "@/app/components/SkeletonCard";
 
 type Hit = {
   objectID: string;
@@ -66,7 +67,11 @@ export default function SearchPage() {
       </motion.h1>
 
       {loading ? (
-        <Spinner />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <SkeletonCard key={i} />
+          ))}
+        </div>
       ) : error ? (
         <p className="text-red-500">{error}</p>
       ) : results.length === 0 ? (
