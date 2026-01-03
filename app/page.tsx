@@ -49,6 +49,7 @@ export default function HomePage() {
 
   return (
     <motion.main
+      id="main-content"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
@@ -77,8 +78,14 @@ export default function HomePage() {
         transition={{ delay: 0.3, duration: 0.5 }}
         className="mt-6 flex gap-5 justify-center"
       >
+        <label htmlFor="search" className="sr-only">
+          Search Hacker News articles
+        </label>
         <motion.input
+          id="search"
+          type="search"
           placeholder="Search Hacker News"
+          aria-describedby="search-help"
           whileFocus={{ scale: 1.02 }}
           transition={{ duration: 0.2 }}
           value={searchTerm}
@@ -86,7 +93,11 @@ export default function HomePage() {
           className="w-full max-w-xl rounded-xl px-5 py-3 border border-gray-700 bg-gray-900 text-gray-200 
                focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
         />
+        <span id="search-help" className="sr-only">
+          Enter a keyword and press search to view results
+        </span>
         <motion.button
+          aria-label="Search Hacker News articles"
           whileTap={{ scale: 0.95 }}
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.2 }}
@@ -108,13 +119,20 @@ export default function HomePage() {
       </h2>
 
       {loading ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div
+          role="status"
+          aria-live="polite"
+          aria-label="Loading trending stories"
+          className="grid grid-cols-1 md:grid-cols-2 gap-4"
+        >
           {Array.from({ length: 6 }).map((_, i) => (
             <SkeletonCard key={i} />
           ))}
         </div>
       ) : error ? (
-        <p className="text-red-500">{error}</p>
+        <p role="alert" className="text-red-500">
+          {error}
+        </p>
       ) : (
         <motion.div
           className="grid grid-cols-1 md:grid-cols-2 gap-4"
@@ -138,7 +156,7 @@ export default function HomePage() {
             >
               <Link
                 href={`/item/${hit.objectID}`}
-                className="font-bold text-gray-100 hover:text-orange-400 transition"
+                className="font-bold text-gray-100 hover:text-orange-400 transition focus:ring-2 focus:ring-orange-400 rounded"
               >
                 {hit.title}
               </Link>
