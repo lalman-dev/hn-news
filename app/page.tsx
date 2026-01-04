@@ -66,7 +66,7 @@ export default function HomePage() {
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
-        className="text-3xl font-extrabold bg-linear-to-r from-orange-700 via-orange-300 to-orange-700 bg-clip-text text-transparent text-center"
+        className="text-3xl font-extrabold bg-linear-to-r from-orange-300 dark:from-orange-700 via-orange-700 dark:via-orange-300 to-orange-300 dark:to-orange-700 bg-clip-text text-transparent text-center"
       >
         Hacker News Portal
       </motion.h1>
@@ -114,7 +114,7 @@ export default function HomePage() {
       {/* Newsletter */}
       <NewsLetter />
       {/* Trending */}
-      <h2 className="mt-10 mb-4 text-xl font-semibold text-gray-200">
+      <h2 className="mt-10 mb-4 text-xl font-semibold text-gray-500 dark:text-gray-200">
         Currently Trending
       </h2>
 
