@@ -1,8 +1,9 @@
 # 🚀 Hacker News Portal
 
-A polished, user‑friendly Hacker News client built with **Next.js**,**TypeScript**, **TailwindCSS**, and **Framer Motion**.  
-It integrates with the **Hacker News Algolia API** to fetch live stories, categories, search results, and comments.
-It features category navigation, trending stories, search, and animated item detail pages with collapsible comment trees.
+A polished, accessible, and performance-focused Hacker News client built with Next.js, TypeScript, Tailwind CSS (v4), and Framer Motion.
+The application integrates with the Hacker News Algolia API to fetch live stories, categories, search results, and threaded comments.
+
+This project focuses on clean architecture, accessibility (WCAG-aware UI), modern theming, and real-world frontend practices.
 
 ---
 
@@ -22,51 +23,79 @@ It features category navigation, trending stories, search, and animated item det
 
 ---
 
-## ✨ Features
+## ✨ Key Features
 
-- 🏠 **Home Page** with logo + navbar
-- 📂 **Category Navigation** (Tech, Science, Games, Business, AI, Programming, Startups, Cybersecurity, Design)
-- 🔥 **Trending Section** for popular stories
-- 🔎 **Search** with keyword‑based results powered by Hacker News API queries
-- 📄 **Item Detail Page** with animated entry + collapsible comment trees
-- 📱 **Responsive Navbar** with scroll shadow, hover animations, and mobile menu
+- 🏠 Home Page with trending Hacker News stories
+
+- 📂 Dynamic Category Navigation using a single scalable route
+
+- 🔎 Search Functionality powered by live API queries
+
+- 📄 Item Detail Page with threaded, collapsible comment trees
+
+- 📱 Fully Responsive Navbar with mobile menu and scroll-aware styling
+
+- 🎨 Light & Dark Theme (system-aware, Tailwind v4 custom variants)
+
+- ♿ Accessibility-focused UI
+
+  - Keyboard-friendly navigation
+
+  - Screen-reader aware loading, error, and empty states
+
+  - ARIA attributes for dynamic and collapsible content
+
+- 🦴 Skeleton Loaders for improved perceived performance
+
+- 🎞️ Subtle Animations using Framer Motion for enhanced UX
 
 ---
 
-## 🔗 API Integration This project uses the [Hacker News Algolia API](https://hn.algolia.com/api) to fetch live data: - **Category Pages** → `https://hn.algolia.com/api/v1/search?query={category}&tags=story`
+## 🔗 API Integration 
+This project uses the Hacker News Algolia API to fetch live data:
 
-- The API integration ensures stories, comments, and search results are always up‑to‑date.
+  -Trending Stories
+    https://hn.algolia.com/api/v1/search?tags=front_page
+
+  - Category & Search Pages
+    https://hn.algolia.com/api/v1/search?query={keyword}&tags=story
+
+  - Item Details & Comments
+    https://hn.algolia.com/api/v1/items/{id}
+
+All API logic is centralized for maintainability and consistency.
 
 ---
 
 ## 🧭 Development Journey
+- Phase 1: Initial Implementation
+ Started with individual static pages to validate UI and data flow.
 
-- **Phase 1: Static Pages**  
-  Initially, each category (Tech, Science, Games, Business, etc.) had its own static page. This proved the concept but quickly became repetitive.
+- Phase 2: Refactor for Scalability
+ Introduced dynamic routes ([category], [id], [keyword]) to eliminate duplication and improve maintainability.
 
-- **Phase 2: Realization & Refactor**  
-  I realized the need for a smarter solution: a single dynamic `[category]` route. This eliminated duplication and made the app scalable.
+- Phase 3: UI & UX Enhancements
+ Added a responsive navbar, animated transitions, and improved layout consistency.
 
-- **Phase 3: Elegant Navbar**  
-  Introduced a `newsCategories` array. Each category name maps automatically to a lowercase path (e.g., `"AI"` → `/ai`).  
-  The Navbar `.map()` renders links dynamically, so adding new categories is as simple as updating the array.
+- Phase 4: Accessibility & Performance Polish
+ Implemented skeleton loaders, accessible loading/error states, keyboard navigation, and WCAG-aware ARIA patterns.
 
-- **Phase 4: User‑Friendly Polish**  
-  Added animations, scroll‑aware shadow, responsive mobile menu, and trending section.
-
-- **Phase 5: Recruiter‑Friendly Polish** Added animations, scroll‑aware shadow, responsive mobile menu, and trending section.
-
+- Phase 5: Theming & Production Readiness
+ Added system-aware light/dark theme using Tailwind CSS v4 custom variants and next-themes.
+ 
 ---
 
 ## 📂 Project Structure
 
 ```
 app/
-├─ [category]/page.tsx # Dynamic category route
-├─ item/[id]/page.tsx # Item detail with comments
+├─ [category]/page.tsx      # Dynamic category route
+├─ item/[id]/page.tsx       # Item detail with comments
 ├─ search/[keyword]/page.tsx # Search results
-├─ components/ # Reusable UI components (Navbar, Spinner, etc.)
-└─ globals.css # Tailwind global styles
+├─ components/              # Reusable UI components
+├─ lib/                     # Centralized API logic
+└─ globals.css              # Tailwind v4 global styles
+
 ```
 
 ## 📦 Installation
@@ -90,14 +119,14 @@ Open http://localhost:3000 to view it in your browser.
 
 🚧 Upcoming Enhancements:
 
-🎨 Skeleton loaders for smoother UX
-
 ⭐ Bookmark / Favorites system
 
 📊 Search filters (points, comments, date)
 
 🔄 Infinite scroll or "Load more" button
 
-📈 Analytics (mocked) to track category clicks
+📈 Mocked analytics for category and search usage
 
-## 🤝 Contributing Pull requests are welcome. For major changes, please open an issue first to discuss.
+## 🤝 Contributing 
+Pull requests are welcome. 
+For major changes, please open an issue first to discuss.
