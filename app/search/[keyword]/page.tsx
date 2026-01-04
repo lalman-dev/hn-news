@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import Spinner from "../../components/Spinner";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { fetchHN } from "@/app/lib/hnApi";
@@ -52,12 +51,14 @@ export default function SearchPage() {
 
   return (
     <motion.main
+      id="main-content"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
       className="mx-auto max-w-3xl px-6 py-10"
     >
       <motion.h1
+        aria-label={`Search results for ${keyword}`}
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
@@ -67,15 +68,22 @@ export default function SearchPage() {
       </motion.h1>
 
       {loading ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div
+          role="status"
+          aria-live="polite"
+          aria-label={`Loading search results for ${keyword}`}
+          className="grid grid-cols-1 md:grid-cols-2 gap-4"
+        >
           {Array.from({ length: 6 }).map((_, i) => (
             <SkeletonCard key={i} />
           ))}
         </div>
       ) : error ? (
-        <p className="text-red-500">{error}</p>
+        <p role="alert" className="text-red-500">
+          {error}
+        </p>
       ) : results.length === 0 ? (
-        <p className="text-gray-400">No results found.</p>
+        <p role="alert" className="text-gray-400">No results found.</p>
       ) : (
         <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {results.map((hit) => (
@@ -86,7 +94,7 @@ export default function SearchPage() {
             >
               <Link
                 href={`/item/${hit.objectID}`}
-                className="font-bold text-gray-100 hover:text-orange-400 transition"
+                className="font-bold text-gray-100 hover:text-orange-400 transition focus:ring-2 focus:outline-none focus:ring-orange-400 rounded"
               >
                 {hit.title}
               </Link>
