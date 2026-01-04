@@ -89,13 +89,13 @@ export default function ItemPage() {
             initial={{ y: -20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.5 }}
-            className="text-3xl font-extrabold text-gray-100 mb-4"
+            className="text-3xl font-extrabold text-gray-700 dark:text-gray-100 mb-4"
           >
             {item.title}
           </motion.h1>
 
           {/* Metadata */}
-          <p className="text-sm text-gray-400 mb-6">
+          <p className="text-sm text-gray-600 dark:text-gray-400 mb-6">
             {item.points ?? 0} points • {item.num_comments ?? 0} comments • by{" "}
             {item.author}
           </p>
@@ -114,7 +114,9 @@ export default function ItemPage() {
           )}
 
           {/* Comments */}
-          <h2 className="text-xl font-semibold text-gray-200 mb-4">Comments</h2>
+          <h2 className="text-xl font-semibold text-gray-700 dark:text-gray-200 mb-4">
+            Comments
+          </h2>
           <CommentTree comments={item.children || []} />
         </>
       ) : null}
@@ -147,9 +149,11 @@ function CommentNode({ comment }: { comment: Comment }) {
     >
       {/* Comment header */}
       <div className="flex items-center justify-between">
-        <p className="text-sm text-gray-300">
-          <span className="font-semibold">{comment.author}</span>:{" "}
-          <span dangerouslySetInnerHTML={{ __html: comment.text }} />
+        <p className="text-sm text-gray-600 dark:text-gray-300">
+          <span className="font-semibold text-gray-700 dark:text-gray-200">
+            {comment.author}
+          </span>
+          : <span dangerouslySetInnerHTML={{ __html: comment.text }} />
         </p>
         {comment.children && comment.children.length > 0 && (
           <button
@@ -167,9 +171,9 @@ function CommentNode({ comment }: { comment: Comment }) {
       <AnimatePresence>
         {open && comment.children && (
           <motion.div
-          id={`comment-children-${comment.id}`}
-    role="region"
-    aria-label={`Replies to comment by ${comment.author}`}
+            id={`comment-children-${comment.id}`}
+            role="region"
+            aria-label={`Replies to comment by ${comment.author}`}
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
