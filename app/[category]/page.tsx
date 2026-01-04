@@ -65,7 +65,7 @@ export default function CategoryPage() {
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className="text-3xl font-extrabold text-gray-100 mb-6 text-center capitalize"
+        className="text-3xl font-extrabold text-gray-600 dark:text-gray-100 mb-6 text-center capitalize"
       >
         {category} News
       </motion.h1>
