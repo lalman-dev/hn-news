@@ -32,13 +32,17 @@ export default function NewsLetter() {
       transition={{ staggerChildren: 0.2 }}
       className="w-full bg-transparent pt-10 text-center text-white flex flex-col items-center justify-center"
     >
-      <motion.h3 className="font-extrabold text-3xl">Get updated</motion.h3>
+      <motion.h3 className="font-extrabold text-3xl text-slate-600 dark:text-white">
+        Get updated
+      </motion.h3>
 
-      <motion.h5>Subscribe to our newsletter & get the latest news</motion.h5>
+      <motion.h5 className="text-slate-500 dark:text-slate-300">
+        Subscribe to our newsletter & get the latest news
+      </motion.h5>
 
       <motion.form
         onSubmit={handleSubmit}
-        className="flex items-center justify-center mt-10 border border-slate-400 text-sm rounded-lg h-14 max-w-md w-full"
+        className="flex items-center justify-center mt-10 border border-slate-600 dark:border-slate-400 text-sm rounded-lg h-14 max-w-md w-full"
       >
         <label htmlFor="email" className="sr-only">
           Email address
@@ -48,14 +52,14 @@ export default function NewsLetter() {
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="bg-transparent outline-none rounded-lg px-4 h-full flex-1"
+          className="bg-transparent outline-none rounded-lg px-4 h-full flex-1 text-slate-800 dark:text-slate-300"
           placeholder="Enter your email address"
           required
         />
 
         <span
           aria-hidden="true"
-          className="border-r text-gray-400 h-11 mr-1.5"
+          className="border-r h-11 mr-1.5  text-slate-700 dark:text-slate-400"
         />
 
         <motion.button
