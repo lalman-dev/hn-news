@@ -15,11 +15,11 @@ This project focuses on clean architecture, accessibility (WCAG-aware UI), moder
 
 ## 🛠️ Tech Stack
 
-![Next.js](https://img.shields.io/badge/Next.js-000000?logo=nextdotjs&logoColor=white)
-![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
-![TailwindCSS](https://img.shields.io/badge/TailwindCSS-38B2AC?logo=tailwindcss&logoColor=white)
-![Framer Motion](https://img.shields.io/badge/Framer_Motion-0055FF?logo=framer&logoColor=white)
-![Hacker News API](https://img.shields.io/badge/HN_API-FF6600?logo=hacker-news&logoColor=white)
+- ![Next.js](https://img.shields.io/badge/Next.js-000000?logo=nextdotjs&logoColor=white)
+- ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
+- ![TailwindCSS](https://img.shields.io/badge/TailwindCSS-38B2AC?logo=tailwindcss&logoColor=white)
+- ![Framer Motion](https://img.shields.io/badge/Framer_Motion-0055FF?logo=framer&logoColor=white)
+- ![Hacker News API](https://img.shields.io/badge/HN_API-FF6600?logo=hacker-news&logoColor=white)
 
 ---
 
@@ -51,38 +51,40 @@ This project focuses on clean architecture, accessibility (WCAG-aware UI), moder
 
 ---
 
-## 🔗 API Integration 
+## 🔗 API Integration
+
 This project uses the Hacker News Algolia API to fetch live data:
 
-  -Trending Stories
-    https://hn.algolia.com/api/v1/search?tags=front_page
+- Trending Stories
+  https://hn.algolia.com/api/v1/search?tags=front_page
 
-  - Category & Search Pages
-    https://hn.algolia.com/api/v1/search?query={keyword}&tags=story
+- Category & Search Pages
+  https://hn.algolia.com/api/v1/search?query={keyword}&tags=story
 
-  - Item Details & Comments
-    https://hn.algolia.com/api/v1/items/{id}
+- Item Details & Comments
+  https://hn.algolia.com/api/v1/items/{id}
 
 All API logic is centralized for maintainability and consistency.
 
 ---
 
 ## 🧭 Development Journey
+
 - Phase 1: Initial Implementation
- Started with individual static pages to validate UI and data flow.
+  Started with individual static pages to validate UI and data flow.
 
 - Phase 2: Refactor for Scalability
- Introduced dynamic routes ([category], [id], [keyword]) to eliminate duplication and improve maintainability.
+  Introduced dynamic routes ([category], [id], [keyword]) to eliminate duplication and improve maintainability.
 
 - Phase 3: UI & UX Enhancements
- Added a responsive navbar, animated transitions, and improved layout consistency.
+  Added a responsive navbar, animated transitions, and improved layout consistency.
 
 - Phase 4: Accessibility & Performance Polish
- Implemented skeleton loaders, accessible loading/error states, keyboard navigation, and WCAG-aware ARIA patterns.
+  Implemented skeleton loaders, accessible loading/error states, keyboard navigation, and WCAG-aware ARIA patterns.
 
 - Phase 5: Theming & Production Readiness
- Added system-aware light/dark theme using Tailwind CSS v4 custom variants and next-themes.
- 
+  Added system-aware light/dark theme using Tailwind CSS v4 custom variants and next-themes.
+
 ---
 
 ## 📂 Project Structure
@@ -119,14 +121,15 @@ Open http://localhost:3000 to view it in your browser.
 
 🚧 Upcoming Enhancements:
 
-⭐ Bookmark / Favorites system
+- ⭐ Bookmark / Favorites system
 
-📊 Search filters (points, comments, date)
+- 📊 Search filters (points, comments, date)
 
-🔄 Infinite scroll or "Load more" button
+- 🔄 Infinite scroll or "Load more" button
 
-📈 Mocked analytics for category and search usage
+- 📈 Mocked analytics for category and search usage
 
-## 🤝 Contributing 
-Pull requests are welcome. 
-For major changes, please open an issue first to discuss.
+## 🤝 Contributing
+
+- Pull requests are welcome.
+- For major changes, please open an issue first to discuss.
