@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import Spinner from "../../components/Spinner";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { fetchHN } from "@/app/lib/hnApi";
@@ -54,13 +53,19 @@ export default function ItemPage() {
 
   return (
     <motion.main
+      id="main-content"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
       className="mx-auto max-w-3xl px-6 py-10"
     >
       {loading ? (
-        <div className="space-y-6 animate-pulse">
+        <div
+          role="status"
+          aria-live="polite"
+          aria-label="Loading aricle and comments"
+          className="space-y-6 animate-pulse"
+        >
           <div className="h-6 bg-gray-700 rounded w-3/4" />
           <div className="h-3 bg-gray-700 rounded w-1/2" />
 
@@ -74,7 +79,9 @@ export default function ItemPage() {
           </div>
         </div>
       ) : error ? (
-        <p className="text-red-500">{error}</p>
+        <p role="alert" className="text-red-500">
+          {error}
+        </p>
       ) : item ? (
         <>
           {/* Title */}
@@ -98,7 +105,9 @@ export default function ItemPage() {
             <Link
               href={item.url}
               target="_blank"
-              className="text-orange-400 hover:underline mb-8 block"
+              rel="noopener noreferrer"
+              aria-label="Read original article (opens a new tab)"
+              className="text-orange-400 hover:underline mb-8 block focus:outline-none focus:ring-2 focus:ring-orange-400 rounded"
             >
               Read original article
             </Link>
@@ -144,8 +153,10 @@ function CommentNode({ comment }: { comment: Comment }) {
         </p>
         {comment.children && comment.children.length > 0 && (
           <button
+            aria-expanded={open}
+            aria-controls={`comment-children-${comment.id}`}
             onClick={() => setOpen(!open)}
-            className="text-xs text-orange-400 hover:underline ml-2"
+            className="text-xs text-orange-400 hover:underline ml-2 focus:outline-none focus:ring-2 focus:ring-orange-400 rounded"
           >
             {open ? "Hide replies" : "Show replies"}
           </button>
@@ -156,6 +167,9 @@ function CommentNode({ comment }: { comment: Comment }) {
       <AnimatePresence>
         {open && comment.children && (
           <motion.div
+            id={`comment-children-${comment.id}`}
+            role="region"
+            aria-label={`Replies to comment by ${comment.author}`}
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
