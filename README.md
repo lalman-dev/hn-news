@@ -68,6 +68,37 @@ All API logic is centralized for maintainability and consistency.
 
 ---
 
+## ♿ Accessibility & Theme Support
+
+ This project is built with accessibility and user preferences in mind, following modern frontend best practices.
+
+  - 🌗 System-aware Light & Dark Mode
+
+    - Automatically respects the user’s OS theme preference
+
+    - Allows manual toggling between light and dark modes
+
+    - Prevents hydration mismatch issues by resolving the theme on client mount
+
+  - 🧠 Hydration-Safe Theme Handling
+
+    - Uses client-only rendering for the theme toggle to ensure correct initial UI state
+
+    - Avoids double-toggle issues when system theme is enabled
+
+  - 🧩 Accessible UI (WCAG-aligned)
+
+    - Semantic HTML structure
+
+    - Keyboard-accessible interactive elements
+
+    - Proper ARIA labels for buttons and controls
+
+    - Screen-reader friendly loading states and navigation
+
+These improvements ensure a consistent, accessible experience across devices, browsers, and user preferences.
+
+
 ## 🧭 Development Journey
 
 - Phase 1: Initial Implementation
@@ -83,7 +114,7 @@ All API logic is centralized for maintainability and consistency.
   Implemented skeleton loaders, accessible loading/error states, keyboard navigation, and WCAG-aware ARIA patterns.
 
 - Phase 5: Theming & Production Readiness
-  Added system-aware light/dark theme using Tailwind CSS v4 custom variants and next-themes.
+  Implemented system-aware theming with hydration-safe rendering using Tailwind CSS v4 custom variants and next-themes.
 
 ---
 
