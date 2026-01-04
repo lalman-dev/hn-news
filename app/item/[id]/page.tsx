@@ -167,9 +167,9 @@ function CommentNode({ comment }: { comment: Comment }) {
       <AnimatePresence>
         {open && comment.children && (
           <motion.div
-            id={`comment-children-${comment.id}`}
-            role="region"
-            aria-label={`Replies to comment by ${comment.author}`}
+          id={`comment-children-${comment.id}`}
+    role="region"
+    aria-label={`Replies to comment by ${comment.author}`}
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}

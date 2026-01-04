@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { motion } from "framer-motion";
+import ThemeToggle from "./ThemeToggle";
 
 const newsCategories = [
   "Tech",
@@ -33,19 +34,19 @@ export default function Navbar() {
       initial={{ y: -80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`sticky top-0 left-0 w-full px-6 py-4 border-b border-gray-700 bg-gray-700/30 backdrop-blur-lg flex justify-between items-center z-50 shadow-lg shadow-slate-400/30 ${
+      className={`sticky top-0 left-0 w-full px-6 py-4 border-b border-gray-200 dark:border-gray-700 bg-white/30 dark:bg-gray-700/30 backdrop-blur-lg flex justify-between items-center z-50 shadow-lg shadow-slate-400/30 ${
         scrolled ? "shadow-lg" : ""
       }`}
     >
       {/* Branding */}
       <motion.div whileHover={{ scale: 1.05 }}>
-        <Link href="/" className="text-xl font-bold text-orange-400">
+        <Link href="/" className="text-xl font-bold text-orange-500 dark:text-orange-400">
           HN News
         </Link>
       </motion.div>
 
       {/* Desktop Links */}
-      <div className="hidden md:flex gap-6 text-sm font-medium text-gray-300">
+      <div className="hidden md:flex gap-6 text-sm font-medium text-gray-600 dark:text-gray-300">
         {newsCategories.map((item) => (
           <div key={item} className="relative overflow-hidden h-6">
             <div className="transition-transform duration-400 hover:-translate-y-full">
@@ -61,8 +62,11 @@ export default function Navbar() {
         ))}
       </div>
 
-      {/* Hamburger (mobile only) */}
       <div className="flex items-center gap-3">
+        <ThemeToggle />
+
+        {/* Hamburger (mobile only) */}
+
         <button className="md:hidden" onClick={() => setMenuOpen(!menuOpen)}>
           {menuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
