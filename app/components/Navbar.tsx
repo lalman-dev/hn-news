@@ -79,13 +79,13 @@ export default function Navbar() {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: -20, opacity: 0 }}
           transition={{ duration: 0.3 }}
-          className="absolute top-full left-0 w-full bg-gray-900 border-t border-gray-700 flex flex-col items-center py-4 md:hidden"
+          className="absolute top-full left-0 w-full bg-gray-200 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 flex flex-col items-center py-4  rounded-lg md:hidden"
         >
           {newsCategories.map((item) => (
             <motion.div
               key={item}
               whileHover={{ scale: 1.1, color: "#f97316" }}
-              className="py-2 text-gray-300"
+              className="py-2 text-gray-600 dark:text-gray-300"
             >
               <Link href={`/${item.toLowerCase()}`}>{item}</Link>
             </motion.div>
