@@ -83,22 +83,24 @@ export default function SearchPage() {
           {error}
         </p>
       ) : results.length === 0 ? (
-        <p role="alert" className="text-gray-400">No results found.</p>
+        <p role="alert" className="text-gray-400">
+          No results found.
+        </p>
       ) : (
         <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {results.map((hit) => (
             <motion.article
               key={hit.objectID}
-              className="rounded-lg border border-gray-700 bg-gray-900 p-4 hover:border-orange-500 transition"
+              className="rounded-lg border border-gray-500 dark:border-gray-700 backdrop-blur-3xl text-gray-800 dark:text-gray-200 p-4 hover:border-orange-500 transition"
               whileHover={{ scale: 1.02 }}
             >
               <Link
                 href={`/item/${hit.objectID}`}
-                className="font-bold text-gray-100 hover:text-orange-400 transition focus:ring-2 focus:outline-none focus:ring-orange-400 rounded"
+                className="font-bold text-gray-700 dark:text-gray-100 hover:text-orange-400 transition focus:ring-2 focus:ring-orange-400 rounded"
               >
                 {hit.title}
               </Link>
-              <p className="mt-2 text-sm text-gray-400">
+              <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
                 {hit.points ?? 0} points • {hit.num_comments ?? 0} comments • by{" "}
                 {hit.author}
               </p>
