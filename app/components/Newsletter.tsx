@@ -64,8 +64,7 @@ export default function NewsLetter() {
 
         <motion.button
           type="submit"
-          className="relative bg-orange-400 bg-clip-text text-transparent 
-                     border border-orange-400 text-sm rounded-lg h-11 mr-1.5 px-3"
+          className="relative bg-orange-400 bg-clip-text text-transparent border border-orange-400 text-sm rounded-lg h-11 mr-1.5 px-3"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
