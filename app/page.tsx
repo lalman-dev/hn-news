@@ -90,7 +90,7 @@ export default function HomePage() {
           transition={{ duration: 0.2 }}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full max-w-xl rounded-xl px-5 py-3 border border-gray-700 bg-gray-900 text-gray-200 
+          className="w-full max-w-xl rounded-xl px-5 py-3 border border-gray-500 dark:border-gray-700  bg-gray-300 dark:bg-gray-900 text-gray-500 dark:text-gray-200 
                focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
         />
         <span id="search-help" className="sr-only">
@@ -113,7 +113,7 @@ export default function HomePage() {
       </motion.div>
       {/* Newsletter */}
       <NewsLetter />
-      {/* Trending */}
+      {/* Trending News */}
       <h2 className="mt-10 mb-4 text-xl font-semibold text-gray-500 dark:text-gray-200">
         Currently Trending
       </h2>
@@ -146,7 +146,7 @@ export default function HomePage() {
           {trending.map((hit) => (
             <motion.article
               key={hit.objectID}
-              className="rounded-lg border border-gray-700 bg-gray-900 p-4 hover:border-orange-500 transition"
+              className="rounded-lg border border-gray-500 dark:border-gray-700 backdrop-blur-3xl text-gray-800 dark:text-gray-200 p-4 hover:border-orange-500 transition"
               whileHover={{ scale: 1.02 }}
               variants={{
                 hidden: { opacity: 0, y: 20 },
@@ -156,11 +156,11 @@ export default function HomePage() {
             >
               <Link
                 href={`/item/${hit.objectID}`}
-                className="font-bold text-gray-100 hover:text-orange-400 transition focus:ring-2 focus:ring-orange-400 rounded"
+                className="font-bold text-gray-700 dark:text-gray-100 hover:text-orange-400 transition focus:ring-2 focus:ring-orange-400 rounded"
               >
                 {hit.title}
               </Link>
-              <p className="mt-2 text-sm text-gray-400">
+              <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
                 {hit.points ?? 0} points • {hit.num_comments ?? 0} comments • by{" "}
                 {hit.author}
               </p>
