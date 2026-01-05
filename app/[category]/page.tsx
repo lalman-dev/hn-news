@@ -61,7 +61,7 @@ export default function CategoryPage() {
         alt=""
       />
       <motion.h1
-      aria-label={`News category: ${category}`}
+        aria-label={`News category: ${category}`}
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
@@ -72,18 +72,23 @@ export default function CategoryPage() {
 
       {loading ? (
         <div
-        role="status"
-        aria-live="polite"
-        aria-label={`Loading ${category} news`}
-        className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          role="status"
+          aria-live="polite"
+          aria-label={`Loading ${category} news`}
+          className="grid grid-cols-1 md:grid-cols-2 gap-4"
+        >
           {Array.from({ length: 6 }).map((_, i) => (
             <SkeletonCard key={i} />
           ))}
         </div>
       ) : error ? (
-        <p role="alert" className="text-red-500">{error}</p>
+        <p role="alert" className="text-red-500">
+          {error}
+        </p>
       ) : results.length === 0 ? (
-        <p role="status" className="text-gray-400">No results found for this category.</p>
+        <p role="status" className="text-gray-400">
+          No results found for this category.
+        </p>
       ) : (
         <motion.div
           className="grid grid-cols-1 md:grid-cols-2 gap-4"
@@ -97,7 +102,7 @@ export default function CategoryPage() {
           {results.map((hit) => (
             <motion.article
               key={hit.objectID}
-              className="rounded-lg border border-gray-700 bg-gray-900 p-4 hover:border-orange-500 transition"
+              className="rounded-lg border border-gray-500 dark:border-gray-700 backdrop-blur-3xl text-gray-800 dark:text-gray-200 p-4 hover:border-orange-500 transition"
               whileHover={{ scale: 1.02 }}
               variants={{
                 hidden: { opacity: 0, y: 20 },
@@ -107,11 +112,11 @@ export default function CategoryPage() {
             >
               <Link
                 href={`/item/${hit.objectID}`}
-                className="font-bold text-gray-100 hover:text-orange-400 transition focus:outline-none focus:ring focus:ring-orange-400 rounded"
+                className="font-bold text-gray-700 dark:text-gray-100 hover:text-orange-400 transition focus:ring-2 focus:ring-orange-400 rounded"
               >
                 {hit.title}
               </Link>
-              <p className="mt-2 text-sm text-gray-400">
+              <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
                 {hit.points ?? 0} points • {hit.num_comments ?? 0} comments • by{" "}
                 {hit.author}
               </p>
