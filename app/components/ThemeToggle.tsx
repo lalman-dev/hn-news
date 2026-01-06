@@ -1,5 +1,5 @@
 "use client";
-
+import { motion } from "motion/react";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
@@ -16,20 +16,32 @@ export default function ThemeToggle() {
   const currentTheme = theme === "system" ? systemTheme : theme;
 
   return (
-    <button
+    <motion.button
       type="button"
       aria-label={`Switch to ${
         currentTheme === "dark" ? "light" : "dark"
       } theme`}
+      whileTap={{ scale: 0.9 }}
       onClick={() => setTheme(currentTheme === "dark" ? "light" : "dark")}
-      className="inline-flex items-center justify-center rounded-lg p-2 border border-gray-500 dark:border-gray-700
-        bg-slate-300 dark:bg-gray-900
-        text-gray-900 dark:text-gray-100
-        hover:bg-gray-100 dark:hover:bg-gray-800
-        focus:outline-none focus:ring-2 focus:ring-orange-400
-        transition-colors"
+      className={`relative flex items-center w-16 h-7 rounded-full transition-all duration-900 
+    ${currentTheme === "dark" ? "bg-gray-600" : "bg-gray-500"}`}
     >
-      {currentTheme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
-    </button>
+      <Sun
+        size={16}
+        className={`absolute left-2 transition-colors duration-300 `}
+      />
+      <Moon
+        size={16}
+        className={`absolute right-2 transition-colors duration-300`}
+      />
+      <motion.div
+        layout
+        transition={{ type: "spring", stiffness: 200, damping: 20 }}
+        className={`absolute w-8 h-6 rounded-full 
+      ${
+        currentTheme === "dark" ? "bg-gray-900 right-0.5" : "bg-white left-0.5"
+      }`}
+      />
+    </motion.button>
   );
 }
