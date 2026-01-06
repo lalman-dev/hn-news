@@ -6,15 +6,15 @@ import { motion } from "framer-motion";
 import ThemeToggle from "./ThemeToggle";
 
 const newsCategories = [
-  "Tech",
-  "Science",
-  "Games",
-  "Business",
-  "Ai",
-  "Programming",
-  "Startups",
-  "Cybersecurity",
-  "Design",
+  { label: "Tech", slug: "tech" },
+  { label: "Science", slug: "science" },
+  { label: "Games", slug: "games" },
+  { label: "Business", slug: "business" },
+  { label: "Ai", slug: "ai" },
+  { label: "Programming", slug: "programming" },
+  { label: "Startups", slug: "startups" },
+  { label: "Cybersecurity", slug: "cybersecurity" },
+  { label: "Design", slug: "design" },
 ];
 
 export default function Navbar() {
@@ -40,7 +40,10 @@ export default function Navbar() {
     >
       {/* Branding */}
       <motion.div whileHover={{ scale: 1.05 }}>
-        <Link href="/" className="text-xl font-bold text-orange-500 dark:text-orange-400">
+        <Link
+          href="/"
+          className="text-xl font-bold text-orange-500 dark:text-orange-400"
+        >
           HN News
         </Link>
       </motion.div>
@@ -48,25 +51,20 @@ export default function Navbar() {
       {/* Desktop Links */}
       <div className="hidden md:flex gap-6 text-sm font-medium text-gray-600 dark:text-gray-300">
         {newsCategories.map((item) => (
-          <div key={item} className="relative overflow-hidden h-6">
+          <div key={item.label} className="relative overflow-hidden h-6">
             <div className="transition-transform duration-400 hover:-translate-y-full">
-              <Link href={`/${item.toLowerCase()}`}>{item}</Link>
-              <Link
-                href={`/${item.toLowerCase()}`}
-                className="absolute top-full left-0"
-              >
-                {item}
+              <Link href={`/${item.slug}`}>{item.label}</Link>
+              <Link href={`/${item.slug}`} className="absolute top-full left-0">
+                {item.label}
               </Link>
             </div>
           </div>
         ))}
       </div>
-
       <div className="flex items-center gap-3">
         <ThemeToggle />
 
         {/* Hamburger (mobile only) */}
-
         <button className="md:hidden" onClick={() => setMenuOpen(!menuOpen)}>
           {menuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
@@ -75,19 +73,19 @@ export default function Navbar() {
       {/* Mobile Menu */}
       {menuOpen && (
         <motion.div
-          initial={{ y: -20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: -20, opacity: 0 }}
-          transition={{ duration: 0.3 }}
+          initial={{ y: -100, x: 30, opacity: 0, scale: 0.8 }}
+          animate={{ y: 0, x: 0, opacity: 1, scale: 1 }}
+          exit={{ y: -100, x: 30, opacity: 0, scale: 0.8 }}
+          transition={{ duration: 0.4 }}
           className="absolute top-full left-0 w-full bg-gray-200 dark:bg-gray-800 border border-gray-400 dark:border-gray-700 flex flex-col items-center py-4  rounded-lg md:hidden"
         >
           {newsCategories.map((item) => (
             <motion.div
-              key={item}
-              whileHover={{ scale: 1.1, color: "#f97316" }}
+              key={item.label}
+              whileHover={{ scale: 1.1 }}
               className="py-2 text-gray-600 dark:text-gray-300"
             >
-              <Link href={`/${item.toLowerCase()}`}>{item}</Link>
+              <Link href={`/${item.slug}`}>{item.label}</Link>
             </motion.div>
           ))}
         </motion.div>
