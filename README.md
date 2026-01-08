@@ -25,11 +25,11 @@ This project focuses on clean architecture, accessibility (WCAG-aware UI), moder
 
 ## ✨ Key Features
 
-- 🏠 Home Page with trending Hacker News stories
+- 🏠 Home Page with **server-side rendered** trending Hacker News stories
 
-- 📂 Dynamic Category Navigation using a single scalable route
+- 📂 Dynamic Category Navigation with **SSR-backed routes** for fast initial load and SEO
 
-- 🔎 Search Functionality powered by live API queries
+- 🔎 Search Functionality powered by live API queries (client-side, user-driven)
 
 - 📄 Item Detail Page with threaded, collapsible comment trees
 
@@ -40,12 +40,12 @@ This project focuses on clean architecture, accessibility (WCAG-aware UI), moder
 - ♿ Accessibility-focused UI
 
   - Keyboard-friendly navigation
-
   - Screen-reader aware loading, error, and empty states
-
   - ARIA attributes for dynamic and collapsible content
 
-- 🦴 Skeleton Loaders for improved perceived performance
+- 🦴 Skeleton Loaders using **Next.js App Router loading.tsx** for improved perceived performance
+
+- ⚠️ Robust Error Handling using **App Router error boundaries (error.tsx)**
 
 - 🎞️ Subtle Animations using Framer Motion for enhanced UX
 
@@ -70,48 +70,83 @@ All API logic is centralized for maintainability and consistency.
 
 ## ♿ Accessibility & Theme Support
 
- This project is built with accessibility and user preferences in mind, following modern frontend best practices.
+This project is built with accessibility and user preferences in mind, following modern frontend best practices.
 
-  - 🌗 System-aware Light & Dark Mode
+- 🌗 System-aware Light & Dark Mode
 
-    - Automatically respects the user’s OS theme preference
+  - Automatically respects the user’s OS theme preference
 
-    - Allows manual toggling between light and dark modes
+  - Allows manual toggling between light and dark modes
 
-    - Prevents hydration mismatch issues by resolving the theme on client mount
+  - Prevents hydration mismatch issues by resolving the theme on client mount
 
-  - 🧠 Hydration-Safe Theme Handling
+- 🧠 Hydration-Safe Theme Handling
 
-    - Uses client-only rendering for the theme toggle to ensure correct initial UI state
+  - Uses client-only rendering for the theme toggle to ensure correct initial UI state
 
-    - Avoids double-toggle issues when system theme is enabled
+  - Avoids double-toggle issues when system theme is enabled
 
-  - 🧩 Accessible UI (WCAG-aligned)
+- 🧩 Accessible UI (WCAG-aligned)
 
-    - Semantic HTML structure
+  - Semantic HTML structure
 
-    - Keyboard-accessible interactive elements
+  - Keyboard-accessible interactive elements
 
-    - Proper ARIA labels for buttons and controls
+  - Proper ARIA labels for buttons and controls
 
-    - Screen-reader friendly loading states and navigation
+  - Screen-reader friendly loading states and navigation
 
 These improvements ensure a consistent, accessible experience across devices, browsers, and user preferences.
 
+---
+
+## 🧠 Rendering Strategy
+
+This project intentionally uses **different rendering strategies based on page behavior**, following modern Next.js App Router best practices.
+
+- **Server-Side Rendering (SSR)**
+
+  - Home page (trending stories)
+  - Category pages
+  - Improves performance, SEO, and first contentful paint
+  - Implemented using Server Components with centralized data fetching
+
+- **Client-Side Rendering (CSR)**
+
+  - Search page
+  - User-driven, frequently changing data
+  - Avoids unnecessary server rendering for interactive queries
+
+- **App Router Native States**
+  - `loading.tsx` for skeleton loaders during server data fetch
+  - `error.tsx` for graceful handling of server and client rendering errors
+
+This hybrid approach keeps the application fast, scalable, and production-ready without over-engineering.
+
+---
+
+🔗 API Integration
+
+All API logic is centralized for maintainability and consistency, and is consumed
+by both Server Components (SSR routes) and Client Components (interactive pages).
+
+---
 
 ## 🧭 Development Journey
 
 - Phase 1: Initial Implementation
   Started with individual static pages to validate UI and data flow.
 
-- Phase 2: Refactor for Scalability
-  Introduced dynamic routes ([category], [id], [keyword]) to eliminate duplication and improve maintainability.
+- Phase 2: Refactor for Scalability & SSR
+  Introduced dynamic routes ([category], [id], [keyword]) and migrated
+  Home and Category pages to server-side rendering using the Next.js App Router.
 
 - Phase 3: UI & UX Enhancements
   Added a responsive navbar, animated transitions, and improved layout consistency.
 
-- Phase 4: Accessibility & Performance Polish
-  Implemented skeleton loaders, accessible loading/error states, keyboard navigation, and WCAG-aware ARIA patterns.
+- Phase 4: Accessibility, Performance & Error Handling
+  Implemented App Router-native loading and error boundaries, skeleton loaders,
+  keyboard navigation, and WCAG-aware ARIA patterns.
 
 - Phase 5: Theming & Production Readiness
   Implemented system-aware theming with hydration-safe rendering using Tailwind CSS v4 custom variants and next-themes.
@@ -121,13 +156,43 @@ These improvements ensure a consistent, accessible experience across devices, br
 ## 📂 Project Structure
 
 ```
+
 app/
-├─ [category]/page.tsx      # Dynamic category route
-├─ item/[id]/page.tsx       # Item detail with comments
-├─ search/[keyword]/page.tsx # Search results
-├─ components/              # Reusable UI components
-├─ lib/                     # Centralized API logic
-└─ globals.css              # Tailwind v4 global styles
+├─ page.tsx                  # SSR Home page
+├─ HomeClient.tsx             # Client-side Home UI (animations, interactions)
+├─ loading.tsx                # App Router loading state (skeletons)
+├─ error.tsx                  # App Router error boundary
+├─ layout.tsx                 # Root layout (Navbar, Providers, theming)
+├─ providers.tsx              # App-wide providers (theme, query, etc.)
+├─ globals.css                # Global Tailwind CSS styles
+│
+├─ [category]/                # Dynamic category routes (SSR)
+│  ├─ page.tsx                # Server Component (fetch category data)
+│  ├─ CategoryClient.tsx      # Client UI with animations
+│  ├─ loading.tsx             # Category loading skeleton
+│  └─ error.tsx               # Category error boundary
+│
+├─ item/
+│  └─ [id]/
+│     └─ page.tsx             # Item detail page with threaded comments
+│
+├─ search/
+│  └─ [keyword]/
+│     └─ page.tsx             # Search results page (client-side)
+│
+├─ components/                # Reusable UI components
+│  ├─ Navbar.tsx
+│  ├─ Newsletter.tsx
+│  ├─ SkeletonCard.tsx
+│  ├─ Spinner.tsx
+│  └─ ThemeToggle.tsx
+│
+└─ lib/
+   └─ hnApi.ts                # Centralized Hacker News API logic
+
+This structure follows a clear separation of concerns:
+Server Components handle data fetching and routing, while Client Components
+manage animations, interactivity, and user-driven behavior.
 
 ```
 
