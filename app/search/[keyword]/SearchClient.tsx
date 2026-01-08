@@ -66,9 +66,9 @@ export default function SearchClient({ keyword }: Props) {
           ))}
         </div>
       ) : isError ? (
-        <p role="alert" className="text-red-500">
-          Failed to load search results
-        </p>
+        (() => {
+          throw new Error("Failed to load search results");
+        })()
       ) : results.length === 0 ? (
         <p role="status" className="text-gray-400 text-center">
           No results found.
