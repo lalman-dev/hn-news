@@ -30,7 +30,7 @@ export default function HomeClient({ stories }: Props) {
   const handleSearch = () => {
     const value = searchTerm.trim();
     if (!value) return;
-    router.push(`/search/${encodeURIComponent(value)}`);
+    router.push(`/search/${encodeURIComponent(searchTerm.trim())}`);
   };
 
   return (
