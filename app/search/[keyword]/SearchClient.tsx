@@ -7,7 +7,7 @@ import Link from "next/link";
 import { fetchHN } from "@/app/lib/hnApi";
 import SkeletonCard from "@/app/components/SkeletonCard";
 
-type Hit = {
+type Story = {
   objectID: string;
   title: string;
   points?: number;
@@ -27,7 +27,7 @@ export default function SearchClient({ keyword }: Props) {
   const { data, isLoading, isError } = useQuery({
     queryKey: ["search", keyword],
     queryFn: () =>
-      fetchHN<HNResponse<Hit>>(
+      fetchHN<HNResponse<Story>>(
         `https://hn.algolia.com/api/v1/search?query=${keyword}&tags=story`
       ),
     enabled: !!keyword,
