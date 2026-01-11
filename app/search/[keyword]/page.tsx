@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { fetchHN } from "@/app/lib/hnApi";
 import SkeletonCard from "@/app/components/SkeletonCard";
+import Background from "@/app/components/Background";
 
 type Story = {
   objectID: string;
@@ -57,6 +58,7 @@ export default function SearchPage() {
       transition={{ duration: 0.6 }}
       className="mx-auto max-w-3xl px-6 py-10"
     >
+      <Background />
       <motion.h1
         aria-label={`Search results for ${keyword}`}
         initial={{ y: -20, opacity: 0 }}

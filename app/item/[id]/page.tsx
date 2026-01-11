@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { fetchHN } from "@/app/lib/hnApi";
+import Background from "@/app/components/Background";
 
 type Comment = {
   id: number;
@@ -59,6 +60,7 @@ export default function ItemPage() {
       transition={{ duration: 0.6 }}
       className="mx-auto max-w-3xl px-6 py-10"
     >
+      <Background />
       {loading ? (
         <div
           role="status"
