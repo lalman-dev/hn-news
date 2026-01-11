@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 import NewsLetter from "./components/Newsletter";
+import Background from "./components/Background";
 
 /* ---------- Types ---------- */
 
@@ -42,12 +43,7 @@ export default function HomeClient({ stories }: Props) {
       className="mx-auto max-w-3xl px-6 py-10"
     >
       {/* Background image (decorative) */}
-      <img
-        src="https://raw.githubusercontent.com/prebuiltui/prebuiltui/refs/heads/main/assets/hero/bg-gradient-2.png"
-        alt=""
-        aria-hidden="true"
-        className="absolute inset-0 -z-10 size-full"
-      />
+      <Background />
       {/* Branding */}
       <motion.h1
         initial={{ y: -20, opacity: 0 }}

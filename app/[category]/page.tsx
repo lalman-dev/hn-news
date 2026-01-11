@@ -1,7 +1,7 @@
 import CategoryClient from "./CategoryClient";
 import { fetchHN } from "../lib/hnApi";
 
-type Hit = {
+type Story = {
   objectID: string;
   title: string;
   points?: number;
@@ -20,7 +20,7 @@ type Props = {
 export default async function CategoryPage({ params }: Props) {
   const { category } = params;
 
-  const res = await fetchHN<HNResponse<Hit>>(
+  const res = await fetchHN<HNResponse<Story>>(
     `https://hn.algolia.com/api/v1/search?query=${category}&tags=story`
   );
 

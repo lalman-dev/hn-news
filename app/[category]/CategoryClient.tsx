@@ -2,6 +2,7 @@
 
 import { motion } from "motion/react";
 import Link from "next/link";
+import Background from "../components/Background";
 
 type Hit = {
   objectID: string;
@@ -26,13 +27,7 @@ export default function CategoryClient({ category, results }: Props) {
       className="relative mx-auto max-w-3xl px-6 py-10"
     >
       {/* Background Image */}
-      <img
-        src="https://raw.githubusercontent.com/prebuiltui/prebuiltui/refs/heads/main/assets/hero/bg-gradient-2.png"
-        alt=""
-        aria-hidden="true"
-        className="absolute inset-0 -z-10 size-full"
-      />
-
+      <Background />
       {/* Heading animation preserved */}
       <motion.h1
         aria-label={`News category: ${category}`}

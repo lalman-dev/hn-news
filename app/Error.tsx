@@ -1,5 +1,6 @@
 "use client";
 import { motion } from "motion/react";
+import Background from "./components/Background";
 
 type Props = {
   error: Error;
@@ -16,13 +17,8 @@ export default function ErrorPage({ error, reset }: Props) {
       role="alert"
       aria-live="assertive"
     >
-      {/* Background image (decorative) */}
-      <img
-        src="https://raw.githubusercontent.com/prebuiltui/prebuiltui/refs/heads/main/assets/hero/bg-gradient-2.png"
-        alt=""
-        aria-hidden="true"
-        className="absolute inset-0 -z-10 size-full"
-      />
+      {/* Background image*/}
+      <Background />
       <motion.h1
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}

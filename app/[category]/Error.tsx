@@ -1,5 +1,7 @@
 "use client";
 
+import Background from "../components/Background";
+
 type Props = {
   error: Error;
   reset: () => void;
@@ -13,12 +15,7 @@ export default function ErrorPage({ reset }: Props) {
       aria-live="assertive"
     >
       {/* Background */}
-      <img
-        src="https://raw.githubusercontent.com/prebuiltui/prebuiltui/refs/heads/main/assets/hero/bg-gradient-2.png"
-        alt="background-image"
-        aria-hidden="true"
-        className="absolute inset-0 -z-10 size-full"
-      />
+      <Background />
 
       <h1 className="text-2xl font-bold text-red-500">
         Failed to load category

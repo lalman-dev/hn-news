@@ -1,3 +1,4 @@
+import Background from "./components/Background";
 import SkeletonCard from "./components/SkeletonCard";
 import { motion } from "motion/react";
 
@@ -13,12 +14,7 @@ export default function Loading() {
       aria-label="Loading Hacker News stories"
     >
       {/* Background image (decorative) */}
-      <img
-        src="https://raw.githubusercontent.com/prebuiltui/prebuiltui/refs/heads/main/assets/hero/bg-gradient-2.png"
-        alt=""
-        aria-hidden="true"
-        className="absolute inset-0 -z-10 size-full"
-      />
+      <Background />
       <motion.h1
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
