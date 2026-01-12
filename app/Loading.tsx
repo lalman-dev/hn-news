@@ -1,6 +1,6 @@
 import Background from "./components/Background";
 import SkeletonCard from "./components/SkeletonCard";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 
 export default function Loading() {
   return (
