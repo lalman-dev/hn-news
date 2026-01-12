@@ -165,8 +165,10 @@ export default function SearchInput() {
             aria-live="polite"
             className="px-4 py-3 flex items-center text-sm text-gray-500 text-center"
           >
-            <Loader2 className="animate-pulse transition-all duration-300" />{" "}
-            <span className="ml-5">Loading suggestions…</span>
+            <Loader2 className="h-5 w-5 animate-spin text-gray-700 dark:text-white" />
+            <span className=" text-gray-700 dark:text-white">
+              Loading suggestions…
+            </span>
           </p>
         ) : dropdownItems.length > 0 ? (
           dropdownItems.map((item, index) => (
