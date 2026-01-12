@@ -1,12 +1,10 @@
 "use client";
-
-import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 import NewsLetter from "./components/Newsletter";
 import Background from "./components/Background";
+import SearchInput from "./components/SearchInput";
 
 /* ---------- Types ---------- */
 
@@ -25,15 +23,6 @@ type Props = {
 /* ---------- Component ---------- */
 
 export default function HomeClient({ stories }: Props) {
-  const [searchTerm, setSearchTerm] = useState("");
-  const router = useRouter();
-
-  const handleSearch = () => {
-    const value = searchTerm.trim();
-    if (!value) return;
-    router.push(`/search/${encodeURIComponent(searchTerm.trim())}`);
-  };
-
   return (
     <motion.main
       id="main-content"
@@ -61,39 +50,7 @@ export default function HomeClient({ stories }: Props) {
         transition={{ delay: 0.3, duration: 0.5 }}
         className="mt-6 flex gap-4 justify-center"
       >
-        <label htmlFor="search" className="sr-only">
-          Search Hacker News articles
-        </label>
-
-        <motion.input
-          aria-describedby="search-help"
-          whileFocus={{ scale: 1.02 }}
-          transition={{ duration: 0.2 }}
-          id="search"
-          type="search"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") handleSearch();
-          }}
-          placeholder="Search Hacker News"
-          className="w-full max-w-xl rounded-xl px-5 py-3 border border-gray-500 dark:border-gray-700 bg-gray-300 dark:bg-gray-900 text-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-orange-500"
-        />
-        <span id="search-help" className="sr-only">
-          Enter a keyword and press search to view results
-        </span>
-
-        <motion.button
-          whileTap={{ scale: 0.95 }}
-          whileHover={{ scale: 1.05 }}
-          transition={{ duration: 0.2 }}
-          type="button"
-          onClick={handleSearch}
-          aria-label="Search Hacker News articles"
-          className="rounded-xl px-5 py-3 bg-orange-400 text-white font-semibold hover:bg-orange-500 transition"
-        >
-          Search
-        </motion.button>
+        <SearchInput />
       </motion.div>
       {/* NewsLetter */}
       <NewsLetter />
