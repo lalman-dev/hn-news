@@ -50,6 +50,8 @@ export default function SearchPage() {
     fetchSearchResults();
   }, [keyword]);
 
+  const decodedKeyword = decodeURIComponent(keyword);
+
   return (
     <motion.main
       id="main-content"
@@ -66,7 +68,7 @@ export default function SearchPage() {
         transition={{ duration: 0.5 }}
         className="text-3xl font-extrabold text-gray-600 dark:text-gray-100 mb-6 text-center"
       >
-        Search Results for "{keyword}"
+        {decodedKeyword}
       </motion.h1>
 
       {loading ? (
