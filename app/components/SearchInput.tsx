@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { fetchHN } from "@/app/lib/hnApi";
+import { Loader2 } from "lucide-react";
 
 /* ---------- Types ---------- */
 
@@ -143,8 +144,10 @@ export default function SearchInput() {
         }}
         onFocus={() => setIsFocused(true)}
         onBlur={() => {
-          setIsFocused(false);
-          setActiveIndex(-1);
+          setTimeout(() => {
+            setIsFocused(false);
+            setActiveIndex(-1);
+          }, 150);
         }}
         placeholder="Search Hacker News"
         className="w-full rounded-xl px-5 py-3 border border-gray-500 dark:border-gray-700 bg-gray-300 dark:bg-gray-900 text-gray-700 dark:text-gray-200 focus:ring-2 focus:ring-orange-500"
@@ -160,9 +163,10 @@ export default function SearchInput() {
           <p
             role="status"
             aria-live="polite"
-            className="px-4 py-3 text-sm text-gray-500 text-center"
+            className="px-4 py-3 flex items-center text-sm text-gray-500 text-center"
           >
-            Loading suggestions…
+            <Loader2 className="animate-pulse transition-all duration-300" />{" "}
+            <span className="ml-5">Loading suggestions…</span>
           </p>
         ) : dropdownItems.length > 0 ? (
           dropdownItems.map((item, index) => (
