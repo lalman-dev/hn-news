@@ -16,12 +16,13 @@ The application consumes the Hacker News Algolia API to deliver trending stories
 
 ---
 
-> **TL;DR**
-> - Production-grade Next.js App Router application using intentional SSR + CSR
-> - Designed around real API constraints (latency, failures, large datasets)
-> - Accessibility-first UI with keyboard and screen-reader support
-> - Clear server/client separation and predictable data flow
-> - Built to simulate real frontend ownership and decision-making
+## ⚡ TL;DR (Quick Overview)
+
+- **Production-grade Next.js App Router** application using intentional SSR + CSR
+- **Designed around real API constraints** (latency, failures, large datasets)
+- **Accessibility-first UI** with keyboard and screen-reader support
+- **Clear server/client separation** and predictable data flow
+- **Built to simulate real frontend ownership and decision-making**
 
 ---
 
