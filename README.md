@@ -2,7 +2,7 @@
 
 A production‑grade Hacker News client focused on **real‑world frontend architecture**, **performance trade‑offs**, and **accessibility‑first design**.
 
-Rather than maximizing features, this project goes deep into how modern React applications are **designed, rendered, and evolved** when working with live, high‑volume data.
+Rather than maximizing features, this project intentionally focuses on **frontend decision-making** — how modern React applications are **designed, rendered, and evolved** when ownership, performance, and reliability matter.
 
 The application consumes the Hacker News Algolia API to deliver trending stories, categories, search results, and deeply nested comment threads using a **hybrid rendering strategy** built on the Next.js App Router.
 
@@ -16,6 +16,15 @@ The application consumes the Hacker News Algolia API to deliver trending stories
 
 ---
 
+> **TL;DR**
+> - Production-grade Next.js App Router application using intentional SSR + CSR
+> - Designed around real API constraints (latency, failures, large datasets)
+> - Accessibility-first UI with keyboard and screen-reader support
+> - Clear server/client separation and predictable data flow
+> - Built to simulate real frontend ownership and decision-making
+
+---
+
 ## 🎯 Project Goals
 
 This project was built with the following goals:
@@ -25,6 +34,8 @@ This project was built with the following goals:
 - Handle **real API constraints** (latency, failures, large datasets)
 - Build an **accessible, keyboard‑friendly UI** for text‑heavy content
 - Treat loading, error, and empty states as **first‑class UX scenarios**
+- Make frontend trade-offs explicit and debuggable rather than implicit
+
 
 The focus is not on novelty, but on **depth, correctness, and maintainability**.
 
@@ -45,17 +56,19 @@ The focus is not on novelty, but on **depth, correctness, and maintainability**.
 - **Server‑Rendered Home Page**
 
   - Trending Hacker News stories
-  - Optimized for SEO and fast first contentful paint
+  - Optimized for SEO and fast first contentful paint.
 
 - **Dynamic Category Pages (SSR)**
 
-  - Category‑based story exploration
+  - Category‑based story exploration.
   - Pre‑rendered on request for performance and shareability
+  - This avoids shipping unnecessary JavaScript to the client for content-heavy routes while keeping initial interaction costs low.
 
 - **Client‑Side Search**
 
-  - User‑driven, real‑time queries
-  - Optimized for responsiveness without server round‑trips
+  - User‑driven, real‑time queries.
+  - Optimized for responsiveness without server round‑trips.
+  - Rendering search results on the client avoids server churn for rapid, exploratory user behavior where SEO provides no value.
 
 - **Item Detail Pages**
 
@@ -103,6 +116,8 @@ Used for:
 - Reduces client‑side JavaScript for initial loads
 
 Implemented using **Server Components** with centralized data fetching.
+The goal is not to showcase every rendering mode, but to apply each one intentionally based on user behavior and content value.
+
 
 ---
 
@@ -154,6 +169,18 @@ The same API layer is consumed by both **Server Components** and **Client Compon
 
 ---
 
+### Failure-Aware UI Design
+
+The application assumes that:
+- API responses can be slow
+- Requests can fail intermittently
+- Data may be incomplete or empty
+  
+For example, partial comment trees or empty responses are rendered as valid states rather than treated as errors.
+UI states are designed so that these conditions never result in broken layouts or dead ends for the user.
+
+---
+
 ## ♿ Accessibility & UX Philosophy
 
 Accessibility is treated as a **design constraint**, not an afterthought.
@@ -163,6 +190,7 @@ Accessibility is treated as a **design constraint**, not an afterthought.
 - ARIA labels for interactive and collapsible elements
 - Screen‑reader friendly announcements for loading and errors
 
+Accessibility was validated manually using keyboard-only navigation and screen-reader checks during development.
 This improves usability for all users, not just assistive technologies.
 
 ---
@@ -183,6 +211,8 @@ Implemented loading states, error boundaries, keyboard navigation, and WCAG‑al
 
 **Phase 5 – Theming & Production Readiness**
 Added hydration‑safe theming and prepared the app for real deployment conditions.
+
+Each phase intentionally mirrors how frontend systems evolve in real teams — starting simple, then hardening architecture, UX, and reliability over time.
 
 ---
 
@@ -231,9 +261,9 @@ Open `http://localhost:3000` to view the application.
 
 If user traffic increased significantly, the next steps would include:
 
+- List virtualization for large datasets
 - Edge or request‑level caching
 - Search result deduplication
-- List virtualization for large datasets
 - Incremental revalidation strategies
 
 Planned feature ideas:
@@ -252,6 +282,14 @@ For major changes, please open an issue to discuss the proposal first.
 
 ---
 
+## 👀 Who This Project Is For
+
+- Frontend engineers evaluating real-world Next.js architecture
+- Hiring managers looking for frontend ownership beyond UI implementation
+- Developers interested in SSR/CSR trade-offs in modern React
+
+---
+
 ## 🧠 Key Takeaway
 
-This project is about demonstrating the ability to **design, build, debug, and evolve** a real frontend system using modern React and Next.js best practices.
+This project is about demonstrating the ability to design, build, debug, and **own end-to-end** a real frontend system using modern React and Next.js best practices.
