@@ -8,14 +8,6 @@ The application consumes the Hacker News Algolia API to deliver trending stories
 
 ---
 
-## 🌐 Live Demo
-
-🔗 **Live Application:** [https://hn-news-two.vercel.app/](https://hn-news-two.vercel.app/)
-
-> ⚠️ This project uses **live Hacker News data**. Network latency, empty states, and API failures are intentionally handled to reflect real‑world production conditions.
-
----
-
 ## ⚡ TL;DR (Quick Overview)
 
 - **Production-grade Next.js App Router** application using intentional SSR + CSR
@@ -23,6 +15,14 @@ The application consumes the Hacker News Algolia API to deliver trending stories
 - **Accessibility-first UI** with keyboard and screen-reader support
 - **Clear server/client separation** and predictable data flow
 - **Built to simulate real frontend ownership and decision-making**
+
+---
+
+## 🌐 Live Demo
+
+🔗 **Live Application:** [https://hn-news-two.vercel.app/](https://hn-news-two.vercel.app/)
+
+> ⚠️ This project uses **live Hacker News data**. Network latency, empty states, and API failures are intentionally handled to reflect real‑world production conditions.
 
 ---
 
