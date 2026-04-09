@@ -6,7 +6,7 @@ import Providers from "./providers";
 
 export const metadata = {
   title: {
-    default: "Hacker News Clone",
+    default: "Hacker News Portal",
     template: "%s | Lalman",
   },
   description:
