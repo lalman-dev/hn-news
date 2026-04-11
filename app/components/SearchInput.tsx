@@ -6,8 +6,6 @@ import { motion } from "framer-motion";
 import { fetchHN } from "@/app/lib/hnApi";
 import { Loader2 } from "lucide-react";
 
-/* ---------- Types ---------- */
-
 type Story = {
   objectID: string;
   title: string;
@@ -22,8 +20,6 @@ type DropdownItem = {
   label: string;
 };
 
-/* ---------- Component ---------- */
-
 export default function SearchInput() {
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState<Story[]>([]);
@@ -37,8 +33,7 @@ export default function SearchInput() {
   const abortRef = useRef<AbortController | null>(null);
   const listboxId = "search-suggestions";
 
-  /* ---------- Dropdown Data ---------- */
-
+  // Dropdown Data
   const dropdownItems: DropdownItem[] =
     query.length >= 3
       ? suggestions.map((s) => ({
@@ -52,7 +47,7 @@ export default function SearchInput() {
         }))
       : [];
 
-  /* ---------- Debounced Fetch ---------- */
+  // Debounced Fetch
 
   useEffect(() => {
     if (query.length < 3) {
@@ -89,7 +84,7 @@ export default function SearchInput() {
     };
   }, [query]);
 
-  /* ---------- Selection ---------- */
+  // Selection
 
   const handleSelect = (value: string) => {
     setHistory((h) => [...new Set([value, ...h])]);
@@ -153,7 +148,7 @@ export default function SearchInput() {
         className="w-full rounded-xl px-5 py-3 border border-gray-500 dark:border-gray-700 bg-gray-300 dark:bg-gray-900 text-gray-700 dark:text-gray-200 focus:ring-2 focus:ring-orange-500"
       />
 
-      {/* ---------- Dropdown ---------- */}
+      {/*Dropdown*/}
       <div
         id={listboxId}
         role="listbox"
