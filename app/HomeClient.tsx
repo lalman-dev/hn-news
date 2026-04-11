@@ -1,9 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import Link from "next/link";
-
 import NewsLetter from "./components/Newsletter";
-import Background from "./components/Background";
 import SearchInput from "./components/SearchInput";
 
 type Story = {
@@ -28,8 +26,6 @@ export default function HomeClient({ stories }: Props) {
       transition={{ duration: 0.6 }}
       className="mx-auto max-w-3xl px-6 py-10"
     >
-      {/* Background image */}
-      <Background />
       {/* Branding */}
       <motion.h1
         initial={{ y: -20, opacity: 0 }}

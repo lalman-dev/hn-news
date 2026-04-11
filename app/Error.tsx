@@ -1,6 +1,5 @@
 "use client";
 import { motion } from "framer-motion";
-import Background from "./components/Background";
 
 type Props = {
   error: Error;
@@ -17,8 +16,6 @@ export default function ErrorPage({ error, reset }: Props) {
       role="alert"
       aria-live="assertive"
     >
-      {/* Background image*/}
-      <Background />
       <motion.h1
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
