@@ -17,6 +17,7 @@ type Props = {
   results: Hit[];
 };
 
+
 export default function CategoryClient({ category, results }: Props) {
   return (
     <motion.main
@@ -28,7 +29,6 @@ export default function CategoryClient({ category, results }: Props) {
     >
       {/* Background Image */}
       <Background />
-      {/* Heading animation preserved */}
       <motion.h1
         aria-label={`News category: ${category}`}
         initial={{ y: -20, opacity: 0 }}
@@ -79,6 +79,7 @@ export default function CategoryClient({ category, results }: Props) {
           ))}
         </motion.div>
       )}
+      
     </motion.main>
   );
 }

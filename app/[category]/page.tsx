@@ -18,15 +18,18 @@ type Props = {
 };
 
 export default async function CategoryPage({ params }: Props) {
-  const { category } = params;
+  const { category } = await params;
 
   const res = await fetchHN<HNResponse<Story>>(
-    `https://hn.algolia.com/api/v1/search?query=${category}&tags=story`
+    `https://hn.algolia.com/api/v1/search?query=${category}&tags=story`,
   );
 
   if (!res?.hits) {
     throw new Error(`Failed to load ${category} news`);
   }
-
+  if (!category) {
+    throw new Error("Category is missing");
+  }
+  
   return <CategoryClient category={category} results={res.hits} />;
 }
