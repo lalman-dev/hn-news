@@ -2,7 +2,6 @@
 
 import { motion } from "motion/react";
 import Link from "next/link";
-import Background from "../components/Background";
 
 type Hit = {
   objectID: string;
@@ -27,8 +26,6 @@ export default function CategoryClient({ category, results }: Props) {
       transition={{ duration: 0.6 }}
       className="relative mx-auto max-w-3xl px-6 py-10"
     >
-      {/* Background Image */}
-      <Background />
       <motion.h1
         aria-label={`News category: ${category}`}
         initial={{ y: -20, opacity: 0 }}
