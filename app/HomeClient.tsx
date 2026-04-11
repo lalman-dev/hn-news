@@ -6,8 +6,6 @@ import NewsLetter from "./components/Newsletter";
 import Background from "./components/Background";
 import SearchInput from "./components/SearchInput";
 
-/* ---------- Types ---------- */
-
 type Story = {
   objectID: string;
   title: string;
@@ -20,7 +18,6 @@ type Props = {
   stories: Story[];
 };
 
-/* ---------- Component ---------- */
 
 export default function HomeClient({ stories }: Props) {
   return (
@@ -31,7 +28,7 @@ export default function HomeClient({ stories }: Props) {
       transition={{ duration: 0.6 }}
       className="mx-auto max-w-3xl px-6 py-10"
     >
-      {/* Background image (decorative) */}
+      {/* Background image */}
       <Background />
       {/* Branding */}
       <motion.h1

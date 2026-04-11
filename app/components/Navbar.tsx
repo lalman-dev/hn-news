@@ -85,7 +85,9 @@ export default function Navbar() {
               whileHover={{ scale: 1.1 }}
               className="py-2 text-gray-600 dark:text-gray-300"
             >
-              <Link href={`/${item.slug}`}>{item.label}</Link>
+              <Link href={`/${item.slug}`} onClick={() => setMenuOpen(false)}>
+                {item.label}
+              </Link>
             </motion.div>
           ))}
         </motion.div>
