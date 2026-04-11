@@ -53,7 +53,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+      <body className="bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 transition-colors duration-300 min-h-screen bg-linear-to-br from-slate-50 via-purple-300 to-indigo-400 dark:from-slate-950 dark:via-gray-800 dark:to-gray-950">
+        <div className="absolute inset-0 bg-pink-200/20 dark:bg-pink-500/10 blur-3xl pointer-events-none" />
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Providers>
             <Navbar />
