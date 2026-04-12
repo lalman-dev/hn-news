@@ -10,7 +10,7 @@ export const metadata = {
     template: "%s | Lalman",
   },
   description:
-    "A fast and modern Hacker News clone built with Next.js App Router, featuring SSR, real-time updates, and clean UI.",
+    "A fast and modern Hacker News Portal built with Next.js App Router, featuring SSR, real-time updates, and clean UI.",
 
   keywords: [
     "Hacker News",
@@ -23,11 +23,11 @@ export const metadata = {
   authors: [{ name: "Lalman" }],
 
   openGraph: {
-    title: "Hacker News Clone",
+    title: "Hacker News Portal",
     description:
-      "Read the latest tech stories with a blazing fast Next.js Hacker News clone.",
+      "Read the latest tech stories with a blazing fast Next.js Hacker News Portal.",
     url: "https://hn-news-two.vercel.app",
-    siteName: "Hacker News Clone",
+    siteName: "Hacker News Portal",
     images: [
       {
         url: "/og-image.png",
@@ -40,9 +40,9 @@ export const metadata = {
 
   twitter: {
     card: "summary_large_image",
-    title: "Hacker News Clone",
+    title: "Hacker News Portal",
     description:
-      "Blazing fast Hacker News clone built with Next.js App Router.",
+      "Blazing fast Hacker News Portal built with Next.js App Router.",
   },
 };
 
