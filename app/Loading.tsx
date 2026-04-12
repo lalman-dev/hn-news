@@ -1,4 +1,3 @@
-import Background from "./components/Background";
 import SkeletonCard from "./components/SkeletonCard";
 import { motion } from "framer-motion";
 
@@ -13,8 +12,6 @@ export default function Loading() {
       aria-live="polite"
       aria-label="Loading Hacker News stories"
     >
-      {/* Background image (decorative) */}
-      <Background />
       <motion.h1
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}

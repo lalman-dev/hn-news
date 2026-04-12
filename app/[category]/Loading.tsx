@@ -1,4 +1,3 @@
-import Background from "../components/Background";
 import SkeletonCard from "../components/SkeletonCard";
 
 export default function Loading() {
@@ -9,8 +8,6 @@ export default function Loading() {
       aria-live="polite"
       aria-label="Loading category news"
     >
-      {/* Background */}
-      <Background />
       <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-4">
         {Array.from({ length: 6 }).map((_, i) => (
           <SkeletonCard key={i} />

@@ -1,7 +1,5 @@
 "use client";
 
-import Background from "../components/Background";
-
 type Props = {
   error: Error;
   reset: () => void;
@@ -14,9 +12,6 @@ export default function ErrorPage({ reset }: Props) {
       role="alert"
       aria-live="assertive"
     >
-      {/* Background */}
-      <Background />
-
       <h1 className="text-2xl font-bold text-red-500">
         Failed to load category
       </h1>
