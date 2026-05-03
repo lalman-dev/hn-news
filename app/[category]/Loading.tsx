@@ -3,13 +3,26 @@ import SkeletonCard from "../components/SkeletonCard";
 export default function Loading() {
   return (
     <main
-      className="relative mx-auto max-w-3xl px-6 py-10"
+      className="page"
       role="status"
       aria-live="polite"
       aria-label="Loading category news"
     >
-      <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-4">
-        {Array.from({ length: 6 }).map((_, i) => (
+      <div
+        style={{
+          paddingBottom: 16,
+          borderBottom: "1px solid var(--rule)",
+          marginBottom: 24,
+        }}
+      >
+        <div
+          className="skel"
+          style={{ height: 11, width: 70, marginBottom: 8 }}
+        />
+        <div className="skel" style={{ height: 44, width: 180 }} />
+      </div>
+      <div className="story-grid">
+        {Array.from({ length: 9 }).map((_, i) => (
           <SkeletonCard key={i} />
         ))}
       </div>

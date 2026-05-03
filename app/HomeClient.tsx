@@ -1,8 +1,9 @@
 "use client";
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import Link from "next/link";
 import NewsLetter from "./components/Newsletter";
 import SearchInput from "./components/SearchInput";
+import { TrendingUp, Flame, MessageSquare, User } from "lucide-react";
 
 type Story = {
   objectID: string;
@@ -12,92 +13,131 @@ type Story = {
   num_comments?: number;
 };
 
-type Props = {
-  stories: Story[];
+const stagger: Variants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.055, delayChildren: 0.1 } },
+};
+const cardAnim: Variants = {
+  hidden: { opacity: 0, y: 16 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.35, ease: "easeOut" },
+  },
 };
 
-
-export default function HomeClient({ stories }: Props) {
+export default function HomeClient({ stories }: { stories: Story[] }) {
   return (
     <motion.main
       id="main-content"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.6 }}
-      className="mx-auto max-w-3xl px-6 py-10"
+      transition={{ duration: 0.4 }}
+      className="page"
     >
-      {/* Branding */}
-      <motion.h1
-        initial={{ y: -20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5 }}
-        className="text-3xl font-extrabold text-center bg-linear-to-r from-orange-300 via-orange-700 to-orange-300 bg-clip-text text-transparent"
-      >
-        Hacker News Portal
-      </motion.h1>
+      {/* ── Header ── */}
+      <div className="page-header">
+        <div>
+          <p className="page-eyebrow">Live Feed</p>
+          <h1 className="page-title">
+            FRONT
+            <br />
+            PAGE
+          </h1>
+        </div>
+        <div className="page-count">
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 5,
+              justifyContent: "flex-end",
+            }}
+          >
+            <Flame size={12} color="var(--signal)" />
+            <span style={{ color: "var(--signal)" }}>{stories.length}</span>
+          </div>
+          <div>stories today</div>
+        </div>
+      </div>
 
-      {/* Search */}
+      {/* ── Search ── */}
       <motion.div
-        initial={{ y: 30, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.3, duration: 0.5 }}
-        className="mt-6 flex gap-4 justify-center"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.15, duration: 0.35 }}
+        style={{ marginBottom: 24 }}
       >
         <SearchInput />
       </motion.div>
-      {/* NewsLetter */}
-      <NewsLetter />
 
-      {/* Trending */}
-      <motion.h2
-        initial={{ y: 20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5 }}
-        className="mt-10 mb-4 text-xl font-semibold text-gray-700 dark:text-gray-200"
+      {/* ── Trending section label ── */}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 8,
+          marginBottom: 14,
+        }}
       >
-        Currently Trending
-      </motion.h2>
+        <TrendingUp size={13} color="var(--ink-3)" />
+        <span className="page-eyebrow" style={{ color: "var(--ink-3)" }}>
+          Trending now
+        </span>
+      </div>
 
+      {/* ── Grid ── */}
       {stories.length === 0 ? (
-        <p role="status" aria-live="polite">
+        <p
+          role="status"
+          aria-live="polite"
+          style={{
+            fontFamily: "var(--font-mono)",
+            fontSize: ".78rem",
+            color: "var(--ink-3)",
+          }}
+        >
           No trending stories available.
         </p>
       ) : (
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 gap-4"
+          className="story-grid"
+          variants={stagger}
           initial="hidden"
           animate="visible"
-          variants={{
-            hidden: {},
-            visible: { transition: { staggerChildren: 0.1 } },
-          }}
         >
-          {stories.map((item) => (
+          {stories.map((item, i) => (
             <motion.article
               key={item.objectID}
-              whileHover={{ scale: 1.02 }}
-              variants={{
-                hidden: { opacity: 0, y: 20 },
-                visible: { opacity: 1, y: 0 },
-              }}
-              transition={{ duration: 0.4 }}
-              className="rounded-lg border border-gray-500 dark:border-gray-700 p-4 backdrop-blur-3xl transition hover:border-orange-500"
+              variants={cardAnim}
+              className="card"
             >
-              <Link
-                href={`/item/${item.objectID}`}
-                className="font-bold text-gray-800 dark:text-gray-100 hover:text-orange-400 focus:ring-2 focus:ring-orange-400 rounded"
-              >
+              <span className="card-index">
+                #{String(i + 1).padStart(2, "0")}
+              </span>
+              <Link href={`/item/${item.objectID}`} className="card-title">
                 {item.title}
               </Link>
-
-              <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
-                {item.points ?? 0} points • {item.num_comments ?? 0} comments •
-                by {item.author}
-              </p>
+              <div className="card-meta">
+                <span className="badge badge-pts">
+                  <Flame size={9} /> {item.points ?? 0}
+                </span>
+                <span className="badge badge-cmt">
+                  <MessageSquare size={9} /> {item.num_comments ?? 0}
+                </span>
+                <span className="badge badge-auth">
+                  <User size={9} /> {item.author}
+                </span>
+              </div>
             </motion.article>
           ))}
         </motion.div>
       )}
+
+      {/* ── Newsletter ── */}
+      <div style={{ marginTop: 36 }}>
+        <NewsLetter />
+      </div>
     </motion.main>
   );
 }

@@ -1,27 +1,33 @@
 "use client";
+import { motion } from "framer-motion";
+import { RefreshCw } from "lucide-react";
 
-type Props = {
+export default function CategoryError({
+  error,
+  reset,
+}: {
   error: Error;
   reset: () => void;
-};
-
-export default function ErrorPage({ reset }: Props) {
+}) {
   return (
-    <main
-      className="relative mx-auto max-w-3xl px-6 py-10"
+    <motion.main
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.4 }}
+      className="page"
       role="alert"
       aria-live="assertive"
     >
-      <h1 className="text-2xl font-bold text-red-500">
-        Failed to load category
-      </h1>
-
-      <button
-        onClick={reset}
-        className="mt-6 rounded-lg bg-orange-400 px-5 py-2 text-white hover:bg-orange-500"
-      >
-        Retry
-      </button>
-    </main>
+      <div className="error-panel" style={{ maxWidth: 480 }}>
+        <div className="error-code">ERR</div>
+        <p className="error-title">Failed to load category</p>
+        <p className="error-msg">
+          Could not fetch stories for this category. Please try again.
+        </p>
+        <button onClick={reset} className="error-btn">
+          <RefreshCw size={12} /> Retry
+        </button>
+      </div>
+    </motion.main>
   );
 }

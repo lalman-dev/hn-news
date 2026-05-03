@@ -1,31 +1,23 @@
 import SkeletonCard from "./components/SkeletonCard";
-import { motion } from "framer-motion";
 
 export default function Loading() {
   return (
-    <motion.main
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.6 }}
-      className="mx-auto max-w-3xl px-6 py-10"
+    <main
+      className="page"
       role="status"
       aria-live="polite"
       aria-label="Loading Hacker News stories"
     >
-      <motion.h1
-        initial={{ y: -20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5 }}
-        className="text-3xl font-extrabold text-center"
-      >
-        Hacker News Portal
-      </motion.h1>
-
-      <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-4">
-        {Array.from({ length: 6 }).map((_, i) => (
-          <SkeletonCard key={i} />
-        ))}
+      <div style={{ paddingBottom: 16, borderBottom: "1px solid var(--rule)", marginBottom: 24 }}>
+        <div className="skel" style={{ height: 11, width: 80, marginBottom: 8 }} />
+        <div className="skel" style={{ height: 44, width: 220 }} />
       </div>
-    </motion.main>
+      <div style={{ marginBottom: 24 }}>
+        <div className="skel" style={{ height: 42, borderRadius: 6 }} />
+      </div>
+      <div className="story-grid">
+        {Array.from({ length: 9 }).map((_, i) => <SkeletonCard key={i} />)}
+      </div>
+    </main>
   );
 }

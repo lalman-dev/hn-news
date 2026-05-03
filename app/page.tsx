@@ -15,7 +15,7 @@ type HNResponse<T> = {
 
 export default async function HomePage() {
   const res = await fetchHN<HNResponse<Story>>(
-    "https://hn.algolia.com/api/v1/search?tags=front_page"
+    "https://hn.algolia.com/api/v1/search?tags=front_page",
   );
 
   if (!res?.hits) {

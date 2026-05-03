@@ -6,42 +6,28 @@ import { useEffect, useState } from "react";
 
 export default function ThemeToggle() {
   const { theme, setTheme, systemTheme } = useTheme();
-  const [mounted, setMounted] = useState<boolean>(false);
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  if (!mounted) return <div className="t-toggle" style={{ opacity: 0 }} />;
 
-  if (!mounted) return null;
-
-  const currentTheme = theme === "system" ? systemTheme : theme;
+  const cur    = theme === "system" ? systemTheme : theme;
+  const isDark = cur === "dark";
 
   return (
-    <motion.button
+    <button
       type="button"
-      aria-label={`Switch to ${
-        currentTheme === "dark" ? "light" : "dark"
-      } theme`}
-      whileTap={{ scale: 0.9 }}
-      onClick={() => setTheme(currentTheme === "dark" ? "light" : "dark")}
-      className={`relative flex items-center w-16 h-7 rounded-full transition-all duration-900 
-    ${currentTheme === "dark" ? "bg-gray-600" : "bg-gray-500"}`}
+      aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
+      onClick={() => setTheme(isDark ? "light" : "dark")}
+      className="t-toggle"
     >
-      <Sun
-        size={16}
-        className={`absolute left-2 transition-colors duration-300 `}
-      />
-      <Moon
-        size={16}
-        className={`absolute right-2 transition-colors duration-300`}
-      />
+      <Sun  size={10} className="t-icon" style={{ left: 6,  opacity: isDark ? .35 : 1 }} />
+      <Moon size={10} className="t-icon" style={{ right: 6, opacity: isDark ? 1  : .35 }} />
       <motion.div
         layout
-        transition={{ type: "spring", stiffness: 200, damping: 20 }}
-        className={`absolute w-8 h-6 rounded-full 
-      ${
-        currentTheme === "dark" ? "bg-gray-900 right-0.5" : "bg-white left-0.5"
-      }`}
+        transition={{ type: "spring", stiffness: 280, damping: 24 }}
+        className="t-thumb"
+        style={{ left: isDark ? "calc(100% - 21px)" : 3 }}
       />
-    </motion.button>
+    </button>
   );
 }
