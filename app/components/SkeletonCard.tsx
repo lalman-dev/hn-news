@@ -1,11 +1,29 @@
 export default function SkeletonCard() {
   return (
     <div
-      className="animate-pulse rounded-lg border border-gray-300 dark:border-gray-700 bg-gray-200 dark:bg-gray-900 p-4"
+      className="card"
       aria-hidden="true"
+      style={{ cursor: "default", pointerEvents: "none" }}
     >
-      <div className="h-4 w-3/4 rounded bg-gray-400 dark:bg-gray-700" />
-      <div className="mt-3 h-3 w-1/2 rounded bg-gray-400 dark:bg-gray-700" />
+      <div className="skel" style={{ height: 13, width: "75%" }} />
+      <div
+        className="skel"
+        style={{ height: 13, width: "60%", marginTop: 4 }}
+      />
+      <div style={{ display: "flex", gap: 6, marginTop: 4 }}>
+        <div
+          className="skel"
+          style={{ height: 18, width: 56, borderRadius: 3 }}
+        />
+        <div
+          className="skel"
+          style={{ height: 18, width: 64, borderRadius: 3 }}
+        />
+        <div
+          className="skel"
+          style={{ height: 18, width: 88, borderRadius: 3 }}
+        />
+      </div>
     </div>
   );
 }

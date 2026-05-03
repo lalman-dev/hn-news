@@ -1,7 +1,7 @@
 "use client";
-
-import { motion } from "motion/react";
+import { motion, type Variants } from "framer-motion";
 import Link from "next/link";
+import { Flame, MessageSquare, User, Tag } from "lucide-react";
 
 type Hit = {
   objectID: string;
@@ -11,72 +11,98 @@ type Hit = {
   num_comments?: number;
 };
 
-type Props = {
-  category: string;
-  results: Hit[];
+const stagger: Variants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.055, delayChildren: 0.08 } },
+};
+const cardAnim: Variants = {
+  hidden: { opacity: 0, y: 14 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.32, ease: "easeOut" },
+  },
 };
 
-
-export default function CategoryClient({ category, results }: Props) {
+export default function CategoryClient({
+  category,
+  results,
+}: {
+  category: string;
+  results: Hit[];
+}) {
   return (
     <motion.main
       id="main-content"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.6 }}
-      className="relative mx-auto max-w-3xl px-6 py-10"
+      transition={{ duration: 0.4 }}
+      className="page"
     >
-      <motion.h1
-        aria-label={`News category: ${category}`}
-        initial={{ y: -20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5 }}
-        className="text-3xl font-extrabold text-gray-600 dark:text-gray-100 mb-6 text-center capitalize"
-      >
-        {category} News
-      </motion.h1>
+      {/* Header */}
+      <div className="page-header">
+        <div>
+          <p
+            className="page-eyebrow"
+            style={{ display: "flex", alignItems: "center", gap: 6 }}
+          >
+            <Tag size={10} /> Category
+          </p>
+          <h1 className="page-title" aria-label={`News category: ${category}`}>
+            {category.toUpperCase()}
+          </h1>
+        </div>
+        <div className="page-count">
+          <span style={{ color: "var(--signal)" }}>{results.length}</span>
+          <div>results</div>
+        </div>
+      </div>
 
       {results.length === 0 ? (
-        <p role="status" className="text-gray-400 text-center">
+        <p
+          role="status"
+          style={{
+            fontFamily: "var(--font-mono)",
+            fontSize: ".78rem",
+            color: "var(--ink-3)",
+          }}
+        >
           No results found for this category.
         </p>
       ) : (
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 gap-4"
+          className="story-grid"
+          variants={stagger}
           initial="hidden"
           animate="visible"
-          variants={{
-            hidden: {},
-            visible: { transition: { staggerChildren: 0.1 } },
-          }}
         >
-          {results.map((item) => (
+          {results.map((item, i) => (
             <motion.article
               key={item.objectID}
-              className="rounded-lg border border-gray-500 dark:border-gray-700 backdrop-blur-3xl text-gray-800 dark:text-gray-200 p-4 hover:border-orange-500 transition"
-              whileHover={{ scale: 1.02 }}
-              variants={{
-                hidden: { opacity: 0, y: 20 },
-                visible: { opacity: 1, y: 0 },
-              }}
-              transition={{ duration: 0.4 }}
+              variants={cardAnim}
+              className="card"
             >
-              <Link
-                href={`/item/${item.objectID}`}
-                className="font-bold text-gray-700 dark:text-gray-100 hover:text-orange-400 transition focus:ring-2 focus:ring-orange-400 rounded"
-              >
+              <span className="card-index">
+                #{String(i + 1).padStart(2, "0")}
+              </span>
+              <Link href={`/item/${item.objectID}`} className="card-title">
                 {item.title}
               </Link>
-
-              <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
-                {item.points ?? 0} points • {item.num_comments ?? 0} comments •
-                by {item.author}
-              </p>
+              <div className="card-meta">
+                <span className="badge badge-pts">
+                  <Flame size={9} /> {item.points ?? 0}
+                </span>
+                <span className="badge badge-cmt">
+                  <MessageSquare size={9} /> {item.num_comments ?? 0}
+                </span>
+                <span className="badge badge-auth">
+                  <User size={9} /> {item.author}
+                </span>
+              </div>
             </motion.article>
           ))}
         </motion.div>
       )}
-      
     </motion.main>
   );
 }

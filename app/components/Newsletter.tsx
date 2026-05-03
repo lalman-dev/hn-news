@@ -1,6 +1,5 @@
 "use client";
-
-import { SparkleIcon } from "lucide-react";
+import { Rss } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import React, { useEffect, useState } from "react";
 
@@ -10,98 +9,120 @@ export default function NewsLetter() {
 
   useEffect(() => {
     if (!showModal) return;
-
-    const timer = setTimeout(() => {
-      setShowModal(false);
-    }, 3000);
-    return () => clearTimeout(timer);
+    const t = setTimeout(() => setShowModal(false), 3000);
+    return () => clearTimeout(t);
   }, [showModal]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!email.trim()) return;
-
     setShowModal(true);
     setEmail("");
   };
 
   return (
-    <motion.div
-      initial="hidden"
-      animate="visible"
-      transition={{ staggerChildren: 0.2 }}
-      className="w-full bg-transparent pt-10 text-center text-white flex flex-col items-center justify-center"
-    >
-      <motion.h3 className="font-extrabold text-3xl text-slate-600 dark:text-white">
-        Get updated
-      </motion.h3>
+    <>
+      <div className="nl-wrap">
+        <div>
+          <p className="nl-label">Newsletter</p>
+          <h3 className="nl-title">Stay ahead of the feed</h3>
+          <p className="nl-sub">Top stories. No noise. Unsubscribe anytime.</p>
+        </div>
+        <form onSubmit={handleSubmit} className="nl-form">
+          <label htmlFor="nl-email" className="sr-only">
+            Email address
+          </label>
+          <input
+            id="nl-email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="nl-input"
+            placeholder="you@example.com"
+            required
+          />
+          <motion.button
+            type="submit"
+            className="nl-btn"
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+          >
+            Subscribe
+          </motion.button>
+        </form>
+      </div>
 
-      <motion.h5 className="text-slate-500 dark:text-slate-300">
-        Subscribe to our newsletter & get the latest news
-      </motion.h5>
-
-      <motion.form
-        onSubmit={handleSubmit}
-        className="flex items-center justify-center mt-10 border border-slate-600 dark:border-slate-400 text-sm rounded-lg h-14 max-w-md w-full"
-      >
-        <label htmlFor="email" className="sr-only">
-          Email address
-        </label>
-        <input
-          id="email"
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="bg-transparent outline-none rounded-lg px-4 h-full flex-1 text-slate-800 dark:text-slate-300"
-          placeholder="Enter your email address"
-          required
-        />
-
-        <span
-          aria-hidden="true"
-          className="border-r h-11 mr-1.5  text-slate-700 dark:text-slate-400"
-        />
-
-        <motion.button
-          type="submit"
-          className="relative bg-orange-400 bg-clip-text text-transparent border border-orange-400 text-sm rounded-lg h-11 mr-1.5 px-3"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          Subscribe now
-        </motion.button>
-      </motion.form>
-
-      {/* Success Modal */}
       <AnimatePresence>
         {showModal && (
           <motion.div
             role="dialog"
             aria-live="polite"
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.5 }}
-            className="fixed inset-0 flex items-center justify-center bg-black/50"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            style={{
+              position: "fixed",
+              inset: 0,
+              zIndex: 999,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              background: "rgba(0,0,0,.6)",
+              backdropFilter: "blur(6px)",
+            }}
           >
-            <div className="bg-white rounded-lg p-6 text-center max-w-sm w-full">
-              <h2 className="text-xl text-gray-600 font-semibold mb-2">
-                🎉 Subscription Successful
-              </h2>
-              <p className="text-gray-600 mb-4">
-                Thanks for subscribing! You’ll receive updates soon.
-              </p>
-
+            <motion.div
+              initial={{ scale: 0.85, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.85, opacity: 0 }}
+              style={{
+                background: "var(--paper-2)",
+                border: "1px solid var(--rule)",
+                borderTop: "3px solid var(--signal)",
+                borderRadius: 12,
+                padding: "32px 28px",
+                textAlign: "center",
+                maxWidth: 340,
+                width: "90%",
+              }}
+            >
               <motion.div
                 animate={{ rotate: 360 }}
-                transition={{ duration: 1, ease: "easeInOut" }}
-                className="bg-green-400 rounded-full p-3 inline-flex"
+                transition={{ duration: 0.8, ease: "easeInOut" }}
+                style={{
+                  display: "inline-flex",
+                  marginBottom: 14,
+                  padding: 10,
+                  background: "var(--signal-tint)",
+                  borderRadius: "50%",
+                }}
               >
-                <SparkleIcon />
+                <Rss size={22} color="var(--signal)" />
               </motion.div>
-            </div>
+              <h2
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "1.5rem",
+                  letterSpacing: ".06em",
+                  color: "var(--ink)",
+                  marginBottom: 8,
+                }}
+              >
+                SUBSCRIBED
+              </h2>
+              <p
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  fontSize: ".72rem",
+                  color: "var(--ink-2)",
+                }}
+              >
+                You're in. Expect the best from HN, delivered.
+              </p>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.div>
+    </>
   );
 }
