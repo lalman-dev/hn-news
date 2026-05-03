@@ -1,10 +1,18 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { fetchHN } from "@/app/lib/hnApi";
+import {
+  ExternalLink,
+  ChevronDown,
+  ChevronRight,
+  Flame,
+  MessageSquare,
+  User,
+  ArrowLeft,
+} from "lucide-react";
 
 type Comment = {
   id: number;
@@ -12,7 +20,6 @@ type Comment = {
   text: string;
   children?: Comment[];
 };
-
 type Item = {
   id: number;
   title: string;
@@ -31,24 +38,21 @@ export default function ItemPage() {
 
   useEffect(() => {
     if (!id) return;
-
-    const fetchItem = async () => {
+    const run = async () => {
       setLoading(true);
       setError("");
-
       try {
-        const data = await fetchHN<Item>(
-          `https://hn.algolia.com/api/v1/items/${id}`
+        const d = await fetchHN<Item>(
+          `https://hn.algolia.com/api/v1/items/${id}`,
         );
-        setItem(data);
+        setItem(d);
       } catch {
         setError("Failed to load item");
       } finally {
         setLoading(false);
       }
     };
-
-    fetchItem();
+    run();
   }, [id]);
 
   return (
@@ -56,132 +60,195 @@ export default function ItemPage() {
       id="main-content"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.6 }}
-      className="mx-auto max-w-3xl px-6 py-10"
+      transition={{ duration: 0.4 }}
+      className="page"
+      style={{ maxWidth: 820 }}
     >
+      {/* Back */}
+      <Link
+        href="/"
+        style={{
+          display: "inline-flex",
+          alignItems: "center",
+          gap: 5,
+          fontFamily: "var(--font-mono)",
+          fontSize: ".65rem",
+          fontWeight: 700,
+          letterSpacing: ".08em",
+          textTransform: "uppercase",
+          color: "var(--ink-3)",
+          textDecoration: "none",
+          marginBottom: 20,
+          transition: "color .15s",
+        }}
+        onMouseEnter={(e) => (e.currentTarget.style.color = "var(--signal)")}
+        onMouseLeave={(e) => (e.currentTarget.style.color = "var(--ink-3)")}
+      >
+        <ArrowLeft size={11} /> Back to front page
+      </Link>
+
       {loading ? (
         <div
           role="status"
           aria-live="polite"
-          aria-label="Loading aricle and comments"
-          className="space-y-6 animate-pulse"
+          aria-label="Loading article and comments"
         >
-          <div className="h-6 bg-gray-700 rounded w-3/4" />
-          <div className="h-3 bg-gray-700 rounded w-1/2" />
-
-          <div className="space-y-4">
-            {Array.from({ length: 4 }).map((_, i) => (
-              <div key={i} className="border-l border-gray-700 pl-4 space-y-2">
-                <div className="h-3 bg-gray-700 rounded w-1/3" />
-                <div className="h-3 bg-gray-700 rounded w-full" />
-              </div>
-            ))}
+          <div className="item-hero" style={{ marginBottom: 24 }}>
+            <div
+              className="skel"
+              style={{ height: 20, width: "80%", marginBottom: 12 }}
+            />
+            <div className="skel" style={{ height: 14, width: "50%" }} />
+            <div style={{ display: "flex", gap: 8, marginTop: 20 }}>
+              {[60, 72, 96].map((w, i) => (
+                <div
+                  key={i}
+                  className="skel"
+                  style={{ height: 24, width: w, borderRadius: 3 }}
+                />
+              ))}
+            </div>
           </div>
+          {[1, 2, 3, 4].map((i) => (
+            <div
+              key={i}
+              className="comment"
+              style={{ marginTop: i === 1 ? 0 : undefined }}
+            >
+              <div
+                className="skel"
+                style={{ height: 11, width: 80, marginBottom: 8 }}
+              />
+              <div
+                className="skel"
+                style={{ height: 11, width: "100%", marginBottom: 5 }}
+              />
+              <div className="skel" style={{ height: 11, width: "70%" }} />
+            </div>
+          ))}
         </div>
       ) : error ? (
-        <p role="alert" className="text-red-500">
-          {error}
-        </p>
+        <div className="error-panel">
+          <p className="error-title">Error</p>
+          <p className="error-msg">{error}</p>
+        </div>
       ) : item ? (
         <>
-          {/* Title */}
-          <motion.h1
-            initial={{ y: -20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.5 }}
-            className="text-3xl font-extrabold text-gray-700 dark:text-gray-100 mb-4"
-          >
-            {item.title}
-          </motion.h1>
-
-          {/* Metadata */}
-          <p className="text-sm text-gray-600 dark:text-gray-400 mb-6">
-            {item.points ?? 0} points • {item.num_comments ?? 0} comments • by{" "}
-            {item.author}
-          </p>
-
-          {/* Link */}
-          {item.url && (
-            <Link
-              href={item.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Read original article (opens a new tab)"
-              className="text-orange-400 hover:underline mb-8 block focus:outline-none focus:ring-2 focus:ring-orange-400 rounded"
+          {/* Hero */}
+          <div className="item-hero">
+            <h1 className="item-hero-title">{item.title}</h1>
+            <div
+              style={{
+                display: "flex",
+                gap: 6,
+                flexWrap: "wrap",
+                marginBottom: item.url ? 0 : undefined,
+              }}
             >
-              Read original article
-            </Link>
-          )}
+              <span className="badge badge-pts">
+                <Flame size={9} /> {item.points ?? 0} pts
+              </span>
+              <span className="badge badge-cmt">
+                <MessageSquare size={9} /> {item.num_comments ?? 0} comments
+              </span>
+              <span className="badge badge-auth">
+                <User size={9} /> {item.author}
+              </span>
+            </div>
+            {item.url && (
+              <Link
+                href={item.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="item-readlink"
+                aria-label="Read original article (opens in new tab)"
+              >
+                <ExternalLink size={11} /> Read original article
+              </Link>
+            )}
+          </div>
 
           {/* Comments */}
-          <h2 className="text-xl font-semibold text-gray-700 dark:text-gray-200 mb-4">
-            Comments
-          </h2>
-          <CommentTree comments={item.children || []} />
+          <div>
+            <h2 className="comments-header">
+              DISCUSSION
+              <span
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  fontSize: ".65rem",
+                  color: "var(--ink-3)",
+                  marginLeft: 10,
+                  verticalAlign: "middle",
+                }}
+              >
+                {item.num_comments ?? 0}
+              </span>
+            </h2>
+            <CommentTree comments={item.children || []} />
+          </div>
         </>
       ) : null}
     </motion.main>
   );
 }
 
-/* -------------------------------
-   Comment Tree Component
---------------------------------- */
 function CommentTree({ comments }: { comments: Comment[] }) {
   return (
-    <div className="space-y-4">
-      {comments.map((comment) => (
-        <CommentNode key={comment.id} comment={comment} />
+    <div>
+      {comments.map((c) => (
+        <CommentNode key={c.id} comment={c} />
       ))}
     </div>
   );
 }
 
-function CommentNode({ comment }: { comment: Comment }) {
-  const [open, setOpen] = useState(false);
+function CommentNode({
+  comment,
+  depth = 0,
+}: {
+  comment: Comment;
+  depth?: number;
+}) {
+  const [open, setOpen] = useState(depth < 1);
+  const hasChildren = comment.children && comment.children.length > 0;
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 10 }}
+      initial={{ opacity: 0, y: 6 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3 }}
-      className="border-l border-gray-700 pl-4"
+      transition={{ duration: 0.25 }}
+      className="comment"
     >
-      {/* Comment header */}
-      <div className="flex items-center justify-between">
-        <p className="text-sm text-gray-600 dark:text-gray-300">
-          <span className="font-semibold text-gray-700 dark:text-gray-200">
-            {comment.author}
-          </span>
-          : <span dangerouslySetInnerHTML={{ __html: comment.text }} />
-        </p>
-        {comment.children && comment.children.length > 0 && (
-          <button
-            aria-expanded={open}
-            aria-controls={`comment-children-${comment.id}`}
-            onClick={() => setOpen(!open)}
-            className="text-xs text-orange-400 hover:underline ml-2 focus:outline-none focus:ring-2 focus:ring-orange-400 rounded"
-          >
-            {open ? "Hide replies" : "Show replies"}
-          </button>
-        )}
-      </div>
-
-      {/* Nested comments */}
+      <p className="comment-author">{comment.author}</p>
+      <div
+        className="comment-body"
+        dangerouslySetInnerHTML={{ __html: comment.text }}
+      />
+      {hasChildren && (
+        <button
+          aria-expanded={open}
+          aria-controls={`cc-${comment.id}`}
+          onClick={() => setOpen(!open)}
+          className="comment-toggle"
+        >
+          {open ? <ChevronDown size={10} /> : <ChevronRight size={10} />}
+          {open ? "Hide" : `${comment.children!.length}`}{" "}
+          {open ? "replies" : "replies"}
+        </button>
+      )}
       <AnimatePresence>
-        {open && comment.children && (
+        {open && hasChildren && (
           <motion.div
-            id={`comment-children-${comment.id}`}
+            id={`cc-${comment.id}`}
             role="region"
-            aria-label={`Replies to comment by ${comment.author}`}
+            aria-label={`Replies to ${comment.author}`}
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-            className="mt-2 space-y-2"
+            transition={{ duration: 0.25 }}
           >
-            {comment.children.map((child) => (
-              <CommentNode key={child.id} comment={child} />
+            {comment.children!.map((child) => (
+              <CommentNode key={child.id} comment={child} depth={depth + 1} />
             ))}
           </motion.div>
         )}

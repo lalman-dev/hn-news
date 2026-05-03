@@ -30,6 +30,6 @@ export default async function CategoryPage({ params }: Props) {
   if (!category) {
     throw new Error("Category is missing");
   }
-  
+
   return <CategoryClient category={category} results={res.hits} />;
 }
