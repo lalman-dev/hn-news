@@ -1,6 +1,6 @@
 export async function fetchHN<T>(
   url: string,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<T> {
   const res = await fetch(url, options);
 
